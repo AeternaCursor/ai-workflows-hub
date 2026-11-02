@@ -10,7 +10,7 @@
 - 🏭 **按行业找**：金融、营销、电商、法务、HR、教育、内容创作、客服、软件研发、通用办公
 - 🧰 **按平台找**：n8n / Dify / Coze Studio / Langflow / Flowise / ComfyUI / GitHub Agentic Workflows
 - 📦 **拿来即用**：每个条目注明运行平台、所需凭据、可导入文件
-- 🕰️ **AI 发展史**：[动画时间线](timeline/index.html)，从 1943 年人工神经元到 Agent 时代
+- 🕰️ **AI 发展史**：[动画时间线](https://aeternacursor.github.io/ai-workflows-hub/)，从 1943 年人工神经元到 Agent 时代
 - 🔄 **持续维护**：每周定时捕捉新动态，[AI 提示词驱动更新](prompts/update-hub.md)
 
 ## 快速开始
@@ -18,7 +18,7 @@
 1. 想直接用工作流 → 从 [模板合集](resources/template-collections.md) 里挑一个导入
 2. 想按行业看 → 进入 [workflows/](workflows/) 目录选行业
 3. 不知道选哪个平台 → 看 [平台对比](resources/platforms.md)
-4. 想看 AI 发展史 → 打开 [动画时间线](timeline/index.html)
+4. 想看 AI 发展史 → 打开[动画时间线](https://aeternacursor.github.io/ai-workflows-hub/)（或本地 `timeline/index.html`）
 5. 想贡献自己的工作流 → 读 [贡献指南](CONTRIBUTING.md)
 
 完整说明见 [USAGE.md](USAGE.md)。

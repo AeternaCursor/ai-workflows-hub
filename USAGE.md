@@ -8,7 +8,7 @@
 |---|---|
 | 找可直接导入的 AI 工作流模板 | [resources/template-collections.md](resources/template-collections.md) → 按平台挑 → 导入 |
 | 按行业找（金融/营销/电商…） | [workflows/](workflows/) 对应行业目录 |
-| 了解 AI 发展史（动画时间线） | [timeline/index.html](timeline/index.html)（浏览器打开） |
+| 了解 AI 发展史（动画时间线） | [在线版](https://aeternacursor.github.io/ai-workflows-hub/) 或 [timeline/index.html](timeline/index.html) |
 | 选工作流平台（n8n/Dify/Coze…） | [resources/platforms.md](resources/platforms.md) |
 | 看行业标杆实现 | [resources/industry-references.md](resources/industry-references.md) |
 | 让 AI 帮我更新这个仓库 | [prompts/update-hub.md](prompts/update-hub.md) |
@@ -69,7 +69,7 @@ AI 领域变化快，本仓库设计了**三层维护机制**，保证可持续�
 
 ## 时间线的查看与扩展
 
-- **查看**：双击 [timeline/index.html](timeline/index.html)（无需服务器），或访问 GitHub Pages
+- **查看**：[在线版](https://aeternacursor.github.io/ai-workflows-hub/)（GitHub Pages 自动部署），或双击 [timeline/index.html](timeline/index.html) 本地打开（无需服务器）
 - **加事件**：编辑 [timeline/data.js](timeline/data.js)，格式见 [timeline/README.md](timeline/README.md)
 - 时间线是数据驱动的：加一条 JS 对象即可，页面自动排序、渲染、着色
 
