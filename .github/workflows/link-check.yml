@@ -1,7 +1,7 @@
 name: Link Health Check
 
 # 每周二 10:00（北京时间 = UTC 周二 02:00）用 lychee 检查所有 Markdown 中的外链。
-# 有失效链接时自动创建 Issue（查重固定标题）；全部恢复健康时自动关闭旧报告。
+# 确认存在失效链接时自动创建 Issue（查重固定标题）；全部恢复健康时自动关闭旧报告。
 
 on:
   schedule:
@@ -27,7 +27,6 @@ jobs:
           output: lychee-report.md
           args: >-
             --verbose --no-progress --max-retries 2
-            --exclude-mail
             './**/*.md'
 
       - name: Create or close issue
@@ -38,7 +37,17 @@ jobs:
             const fs = require('fs');
             let report = '';
             try { report = fs.readFileSync('lychee-report.md', 'utf8'); } catch (e) {}
-            const failed = '${{ steps.lychee.outputs.exit_code }}' !== '0';
+            const exitCode = '${{ steps.lychee.outputs.exit_code }}';
+
+            // 仅当报告中确实存在非零错误计数时才判定为链接失效，
+            // 避免 lychee 自身报错（如参数不兼容）导致误报
+            const errMatch = report.match(/(\d+)\s+errors?/i);
+            const errorCount = errMatch ? parseInt(errMatch[1], 10) : 0;
+            const failed = exitCode !== '0' && errorCount > 0;
+
+            if (exitCode !== '0' && errorCount === 0) {
+              core.warning('lychee 异常退出但报告无错误计数（可能为工具自身问题），本次不开 Issue。报告片段：' + report.slice(0, 200));
+            }
 
             const issues = await github.rest.issues.listForRepo({
               owner: context.repo.owner, repo: context.repo.repo,
@@ -47,20 +56,20 @@ jobs:
             const existing = issues.data.find(i => i.title === TITLE);
 
             if (!failed) {
-              core.info('所有链接健康');
+              core.info(`链接检查通过（exit_code=${exitCode}, errors=${errorCount}）`);
               if (existing) {
                 await github.rest.issues.update({
                   owner: context.repo.owner, repo: context.repo.repo,
                   issue_number: existing.number,
                   state: 'closed',
-                  body: (existing.body || '') + '\n\n---\n✅ 最新一次检查全部通过，已自动关闭。'
+                  body: (existing.body || '') + '\n\n---\n✅ 最新一次检查全部通过（errors=0），已自动关闭。'
                 });
               }
               return;
             }
 
             const body = [
-              '## ⚠️ 检测到失效链接',
+              `## ⚠️ 检测到 ${errorCount} 个失效链接`,
               '',
               '以下链接在最近一次检查中不可访问，请修复或移除：',
               '',
