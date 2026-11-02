@@ -2,6 +2,7 @@
 
 格式：`- YYYY-MM-DD 变更内容（来源）`，新条目追加在最上方。
 
+- 2026-11-02 新增 PR 四件套 CI 校验（借鉴 awesome-selfhosted 治理模式），真实 PR 红/绿双态验证通过
 - 2026-11-02 标准同步：CONTRIBUTING 升级四件套标准（含 WIP 规则）、update-hub 提示词映射表增收录规范、README 增 mermaid 学习路径图
 - 2026-11-02 12 份 CASES.md 各增第二个进阶案例（周报聚合/大额订单审批/错题变式卷/依赖专项审查/月度对账/人才库反查/知识缺口发现/爆款复刻/合同diff/ControlNet姿态/商品换景/首尾帧视频）
 - 2026-11-02 新增 12 份 CASES.md（实操案例：输入→输出全程演示；代码示例：Code节点/提示词/API脚本；AI 迭代专属提示词）+ 通用定制总纲 prompts/customize-workflow.md
