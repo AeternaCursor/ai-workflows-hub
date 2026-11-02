@@ -4,6 +4,7 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
+| 📦 [AI 代码审查与 PR 自动打标](pr-review-label/)（已收录） | n8n | GPT-4o-mini 审 diff → 打标 → Slack 摘要 |
 | [github/gh-aw](https://github.com/github/gh-aw) | GitHub Actions | 官方 Agentic Workflows：Markdown 定义 → Actions 运行，含权限/审计/成本控制 |
 | Repo Assist | gh-aw | 定时运行：issue 分诊、修 bug、补测试，月度活跃报告 |
 | [PR 自动审查](https://n8n.io/workflows/3804-automated-pr-code-reviews-with-github-gpt-4-and-google-sheets-best-practices/) | n8n | GitHub PR → 提取 diff → GPT-4 按团队规范（Google Sheets 维护）生成审查意见 |

@@ -79,7 +79,9 @@
   }
   /* 年份快速跳转 */
   .era-nav {
-    display: flex; gap: 6px; overflow-x: auto; padding: 4px 2px 10px;
+    position: sticky; top: 64px; z-index: 9;
+    display: flex; gap: 6px; overflow-x: auto; padding: 6px 2px 10px;
+    background: linear-gradient(var(--bg) 85%, transparent);
     scrollbar-width: thin; scrollbar-color: var(--line) transparent;
     -webkit-overflow-scrolling: touch;
   }

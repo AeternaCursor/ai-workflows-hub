@@ -4,15 +4,17 @@
 
 ## 综合对比
 
+Stars 为实时徽章（自动更新，无需维护）：
+
 | 平台 | Stars | 语言 | 部署方式 | 最适合 | 模板生态 |
 |---|---|---|---|---|---|
-| [n8n](https://github.com/n8n-io/n8n) | 100k+ | TS | 自托管 / 云 | 通用自动化 + SaaS 集成（800+ 连接器） | ⭐⭐⭐⭐⭐ [官方库](https://n8n.io/workflows) + 社区 8600+ 合集 |
-| [Dify](https://github.com/langgenius/dify) | 100k+ | Python | 自托管 / 云 | LLM 应用、RAG、Agent、对话产品 | ⭐⭐⭐⭐ [Marketplace](https://marketplace.dify.ai/templates) |
-| [ComfyUI](https://github.com/comfyanonymous/ComfyUI) | 90k+ | Python | 本地 / 云 GPU | 图像、视频、语音生成 | ⭐⭐⭐⭐⭐ [官方模板](https://github.com/comfy-org/workflow_templates) + [画廊](https://comfy.org/workflows) |
-| [Coze Studio](https://github.com/coze-dev/coze-studio) | 40k+ | TS / Go | 自托管 | 可视化 Agent + 插件体系（字节开源） | ⭐⭐⭐ 官方插件市场 |
-| [Langflow](https://github.com/langflow-ai/langflow) | 60k+ | Python | 本地 / 云 | 快速原型 RAG / Agent | ⭐⭐⭐ 内置模板 |
-| [Flowise](https://github.com/FlowiseAI/Flowise) | 35k+ | TS | 本地 / 云 | 低代码 LLM 编排、聊天机器人 | ⭐⭐⭐ 社区模板 |
-| [Activepieces](https://github.com/activepieces/activepieces) | 15k+ | TS | 自托管 / 云 | 轻量自动化（开源 Zapier 替代） | ⭐⭐⭐ 官方 piece 市场 |
+| [n8n](https://github.com/n8n-io/n8n) | ![n8n stars](https://img.shields.io/github/stars/n8n-io/n8n?style=flat-square) | TS | 自托管 / 云 | 通用自动化 + SaaS 集成（800+ 连接器） | ⭐⭐⭐⭐⭐ [官方库](https://n8n.io/workflows) + 社区 8600+ 合集 |
+| [Dify](https://github.com/langgenius/dify) | ![Dify stars](https://img.shields.io/github/stars/langgenius/dify?style=flat-square) | Python | 自托管 / 云 | LLM 应用、RAG、Agent、对话产品 | ⭐⭐⭐⭐ [Marketplace](https://marketplace.dify.ai/templates) |
+| [ComfyUI](https://github.com/comfyanonymous/ComfyUI) | ![ComfyUI stars](https://img.shields.io/github/stars/comfyanonymous/ComfyUI?style=flat-square) | Python | 本地 / 云 GPU | 图像、视频、语音生成 | ⭐⭐⭐⭐⭐ [官方模板](https://github.com/comfy-org/workflow_templates) + [画廊](https://comfy.org/workflows) |
+| [Coze Studio](https://github.com/coze-dev/coze-studio) | ![Coze stars](https://img.shields.io/github/stars/coze-dev/coze-studio?style=flat-square) | TS / Go | 自托管 | 可视化 Agent + 插件体系（字节开源） | ⭐⭐⭐ 官方插件市场 |
+| [Langflow](https://github.com/langflow-ai/langflow) | ![Langflow stars](https://img.shields.io/github/stars/langflow-ai/langflow?style=flat-square) | Python | 本地 / 云 | 快速原型 RAG / Agent | ⭐⭐⭐ 内置模板 |
+| [Flowise](https://github.com/FlowiseAI/Flowise) | ![Flowise stars](https://img.shields.io/github/stars/FlowiseAI/Flowise?style=flat-square) | TS | 本地 / 云 | 低代码 LLM 编排、聊天机器人 | ⭐⭐⭐ 社区模板 |
+| [Activepieces](https://github.com/activepieces/activepieces) | ![Activepieces stars](https://img.shields.io/github/stars/activepieces/activepieces?style=flat-square) | TS | 自托管 / 云 | 轻量自动化（开源 Zapier 替代） | ⭐⭐⭐ 官方 piece 市场 |
 | [gh-aw](https://github.com/github/gh-aw) | 官方 | - | GitHub Actions | 代码仓库内的 AI Agent（issue 分诊、PR 审查） | ⭐⭐⭐ 官方示例集 |
 
 ## 选型建议
