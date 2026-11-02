@@ -204,6 +204,7 @@
     <button class="lang-btn" id="langBtn">EN</button>
     <h1 id="hd-title">人工智能发展史</h1>
     <div class="subtitle" id="hd-sub">从 1943 年的人工神经元到 Agent 时代 —— 一条滚动即阅的时间线</div>
+    <div style="margin-top:10px"><a href="catalog.html" id="hd-cat" style="color:var(--accent);font-size:14px;text-decoration:none;border-bottom:1px dashed currentColor">📦 工作流目录 →</a></div>
     <div class="stats">
       <div class="stat"><b id="st-events">0</b><span data-i18n="events">关键事件</span></div>
       <div class="stat"><b id="st-span">0</b><span data-i18n="span">跨越年份</span></div>
@@ -234,6 +235,7 @@
       sub: "从 1943 年的人工神经元到 Agent 时代 —— 一条滚动即阅的时间线",
       events: "关键事件", span: "跨越年份", cats: "领域分类",
       all: "全部", source: "查看来源", tour: "▶ 自动巡览", tourStop: "⏸ 停止巡览",
+      cat: "📦 工作流目录 →",
       ftData: "数据与展示分离：新增事件只需编辑 timeline/data.js",
       ftRepo: '属于 AI Workflows Hub · 持续更新中'
     },
@@ -242,6 +244,7 @@
       sub: "From the 1943 artificial neuron to the Agentic era — scroll through the milestones",
       events: "Key Events", span: "Years Spanned", cats: "Categories",
       all: "All", source: "Source", tour: "▶ Auto Tour", tourStop: "⏸ Stop",
+      cat: "📦 Workflow Catalog →",
       ftData: "Data-driven: add an event by editing timeline/data.js",
       ftRepo: "Part of AI Workflows Hub · Continuously updated"
     }
@@ -400,6 +403,8 @@
         ? T().ftRepo + ' &middot; <a href="https://github.com/AeternaCursor/ai-workflows-hub">GitHub</a>'
         : '属于 <a href="https://github.com/AeternaCursor/ai-workflows-hub">AI Workflows Hub</a> · 持续更新中';
     document.getElementById("langBtn").textContent = lang === "en" ? "中文" : "EN";
+    const catLink = document.getElementById("hd-cat");
+    if (catLink) catLink.textContent = T().cat;
     const y = scrollY;
     buildChips();
     buildTimeline();

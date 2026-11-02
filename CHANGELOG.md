@@ -2,6 +2,7 @@
 
 格式：`- YYYY-MM-DD 变更内容（来源）`，新条目追加在最上方。
 
+- 2026-11-02 英文 README 增 13 行业案例索引；catalog 补 og meta；时间线↔目录双向互链（双语）；扫尾打磨
 - 2026-11-02 新增三行业（制造/医疗/物流）×3 工作流，总量 15 个覆盖 13 行业；上线可搜索工作流目录页（/catalog.html，数据驱动）；新增英文版 README（README.en.md）
 - 2026-11-02 新增 PR 四件套 CI 校验（借鉴 awesome-selfhosted 治理模式），真实 PR 红/绿双态验证通过
 - 2026-11-02 标准同步：CONTRIBUTING 升级四件套标准（含 WIP 规则）、update-hub 提示词映射表增收录规范、README 增 mermaid 学习路径图

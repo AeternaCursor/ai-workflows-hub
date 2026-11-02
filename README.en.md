@@ -44,9 +44,9 @@ Quickstart (install & run your first) → TUTORIAL (node-by-node)
 → CASES (real examples & code) → customize with AI prompts → contribute back
 ```
 
-- [Quickstart](docs/quickstart.md) — three routes (n8n / ComfyUI / Dify) from zero, incl. API key setup
-- [Usage guide](USAGE.md) · [Contributing (four-piece standard)](CONTRIBUTING.md)
-- [AI customization prompt](prompts/customize-workflow.md) — turn any workflow into your own with any AI assistant
+- [Quickstart](docs/quickstart.md) (in Chinese) — three routes (n8n / ComfyUI / Dify) from zero, incl. API key setup
+- [Usage guide](USAGE.md) (zh) · [Contributing (four-piece standard)](CONTRIBUTING.md) (zh) — tutorials/docs are Chinese-first; English contributions welcome
+- [AI customization prompt](prompts/customize-workflow.md) (zh, works in any language) — turn any workflow into your own with any AI assistant
 
 ## Maintenance
 
