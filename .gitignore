@@ -1,0 +1,25 @@
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时与备份
+*.tmp
+*.bak
+*~
+*.swp
+
+# 编辑器
+.vscode/
+.idea/
+
+# 本地实验（工作流收录请勿提交这些内容）
+node_modules/
+__pycache__/
+*.log
+
+# 环境与密钥（严禁提交）
+.env
+.env.*
+*.key
+secrets/

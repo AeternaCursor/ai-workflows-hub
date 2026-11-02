@@ -1,5 +1,10 @@
 # AI Workflows Hub 🤖
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/AeternaCursor/ai-workflows-hub)](https://github.com/AeternaCursor/ai-workflows-hub/commits/main)
+[![Timeline](https://img.shields.io/badge/AI%20%E5%8F%91%E5%B1%95%E5%8F%B2-%E5%8A%A8%E7%94%BB%E6%97%B6%E9%97%B4%E7%BA%BF-4fc3f7)](https://aeternacursor.github.io/ai-workflows-hub/)
+[![Issues](https://img.shields.io/github/issues/AeternaCursor/ai-workflows-hub)](https://github.com/AeternaCursor/ai-workflows-hub/issues)
+
 > 各行业、各领域的 AI 工作流资源中心：精选模板、行业参考实现、平台引擎导航。
 > Curated AI workflows across industries — templates, reference implementations, and platform engines.
 
