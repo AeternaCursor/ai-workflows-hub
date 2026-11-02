@@ -6,6 +6,9 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
+| 📦 [SDXL 文生图（简洁版）](comfyui-sdxl-simple/)（已收录） | ComfyUI | 经典入门：一个底模跑通文生图 |
+| 📦 [Qwen Image 2.1 Turbo 文生图](comfyui-qwen-image-turbo-t2i/)（已收录） | ComfyUI | 中文提示词友好，两步出图，int8 省显存 |
+| 📦 [Wan2.1 文生视频 1.3B](comfyui-wan-text-to-video/)（已收录） | ComfyUI | 8GB 显存可跑的全原生节点视频生成 |
 | [官方模板库](https://github.com/comfy-org/workflow_templates) | ComfyUI | 官方完整工作流 + 可复用子图（blueprints） |
 | [官方工作流画廊](https://comfy.org/workflows) | ComfyUI | 按文生图 / 图生视频 / 数字人分类，一键复制 |
 | [Wan2.2 视频工作流](https://docs.comfy.org/zh/tutorials/video/wan/wan2_2) | ComfyUI | 文生视频、图生视频、首尾帧（原生节点，无需自定义插件） |

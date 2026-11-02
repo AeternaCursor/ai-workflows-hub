@@ -4,7 +4,8 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
-| [SalesGPT](https://github.com/filip-michalsky/SalesGPT) | LangChain | 对话式销售 Agent，可配置销售阶段 + 异议处理 |
+| 📦 [社媒内容批量生成与发布](social-posts-generator/)（已收录） | n8n | Gemini 生成内容 + 自动多平台发布 |
+| SalesGPT | LangChain | 对话式销售 Agent，可配置销售阶段 + 异议处理 |
 | SEO Agent | Dify | [Marketplace](https://marketplace.dify.ai/templates) 热门模板，关键词 → 内容 → 优化建议 |
 | 内容多渠道分发 | n8n | [官方库](https://n8n.io/workflows) 搜索 `social media`，一稿多发到多平台 |
 

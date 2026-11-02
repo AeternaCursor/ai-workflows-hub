@@ -14,7 +14,7 @@
 
 - 🏭 **按行业找**：金融、营销、电商、法务、HR、教育、内容创作、客服、软件研发、通用办公
 - 🧰 **按平台找**：n8n / Dify / Coze Studio / Langflow / Flowise / ComfyUI / GitHub Agentic Workflows
-- 📦 **拿来即用**：每个条目注明运行平台、所需凭据、可导入文件
+- 📦 **拿来即用**：已收录 **9 个可导入工作流**（n8n ×6 + ComfyUI ×3），每个附凭据清单与使用步骤，见 [workflows/](workflows/)
 - 🕰️ **AI 发展史**：[动画时间线](https://aeternacursor.github.io/ai-workflows-hub/)，从 1943 年人工神经元到 Agent 时代
 - 🔄 **持续维护**：每周定时捕捉新动态，[AI 提示词驱动更新](prompts/update-hub.md)
 

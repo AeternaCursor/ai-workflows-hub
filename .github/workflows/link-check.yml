@@ -1,0 +1,84 @@
+name: Link Health Check
+
+# 每周二 10:00（北京时间 = UTC 周二 02:00）用 lychee 检查所有 Markdown 中的外链。
+# 有失效链接时自动创建 Issue（查重固定标题）；全部恢复健康时自动关闭旧报告。
+
+on:
+  schedule:
+    - cron: "0 2 * * 2"
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run lychee
+        uses: lycheeverse/lychee-action@v2
+        id: lychee
+        with:
+          fail: false
+          format: markdown
+          output: lychee-report.md
+          args: >-
+            --verbose --no-progress --max-retries 2
+            --exclude-mail
+            './**/*.md'
+
+      - name: Create or close issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const TITLE = '[链接健康检查] 失效链接报告';
+            const fs = require('fs');
+            let report = '';
+            try { report = fs.readFileSync('lychee-report.md', 'utf8'); } catch (e) {}
+            const failed = '${{ steps.lychee.outputs.exit_code }}' !== '0';
+
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', per_page: 100
+            });
+            const existing = issues.data.find(i => i.title === TITLE);
+
+            if (!failed) {
+              core.info('所有链接健康');
+              if (existing) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner, repo: context.repo.repo,
+                  issue_number: existing.number,
+                  state: 'closed',
+                  body: (existing.body || '') + '\n\n---\n✅ 最新一次检查全部通过，已自动关闭。'
+                });
+              }
+              return;
+            }
+
+            const body = [
+              '## ⚠️ 检测到失效链接',
+              '',
+              '以下链接在最近一次检查中不可访问，请修复或移除：',
+              '',
+              (report || '详见 workflow 运行日志').slice(0, 50000),
+              '',
+              '---',
+              `_由 link-check workflow 自动创建/更新 · ${new Date().toISOString().slice(0,10)}_`
+            ].join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, body
+              });
+              core.info('已更新既有报告 Issue #' + existing.number);
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title: TITLE, body, labels: ['link-check']
+              });
+            }

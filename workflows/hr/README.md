@@ -11,7 +11,7 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
-| 简历解析 + 评分 | n8n | [官方库](https://n8n.io/workflows) 搜索 `resume`，邮件附件 → 解析 → 表格打分 |
+| 📦 [AI 简历筛选与行为面试助手](resume-screening-gemini/)（已收录） | n8n | Gemini 评简历 + Notion ATS + ElevenLabs 语音面试题 |
 | HR 知识库问答 | Dify | 制度文档入库 → RAG 问答机器人 |
 
 ## 平台模板入口

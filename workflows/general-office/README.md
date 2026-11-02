@@ -6,6 +6,7 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
+| 📦 [邮件摘要 Agent](email-summary/)（已收录） | n8n | 新邮件自动中文摘要+重要度分级，42k 人气入门模板 |
 | 邮件自动处理 | n8n | [官方库](https://n8n.io/workflows) 搜索 `email`：分类、摘要、草稿回复 |
 | 会议纪要 | n8n / Dify | 录音转写 → 要点提取 → 待办分发 |
 | 文档问答 | Dify | [Marketplace](https://marketplace.dify.ai/templates)：文档入库 → RAG 问答 |

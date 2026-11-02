@@ -4,6 +4,7 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
+| 📦 [发票识别校验与入账](invoice-processing/)（已收录） | n8n | OCR + LLM 校验一致性 → Google Sheets 台账 |
 | [anthropics/financial-services](https://github.com/anthropics/financial-services) | Claude | 11 个端到端 Agent：Pitch、市场研究、总账对账、DCF 估值等 |
 | Financial Services 插件包 | Claude | `/comps` 可比公司分析、`/dcf` 现金流折现、`/earnings` 财报分析 |
 | 11 个金融数据 MCP 连接器 | Claude | 顶级金融数据商接入 |

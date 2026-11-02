@@ -11,6 +11,7 @@
 
 | 工作流 | 平台 | 说明 |
 |---|---|---|
+| 📦 [缓存优先 RAG 客服应答](multichannel-support-rag/)（已收录） | n8n | Redis+LangCache 缓存命中免 LLM 成本，未命中走 OpenAI RAG |
 | 多步 RAG 答疑 | Dify | [Marketplace](https://marketplace.dify.ai/templates)：问题抽取 → 循环检索 → 带引用回答 |
 | 客服 Agent | Coze | [Coze Studio](https://github.com/coze-dev/coze-studio) 可视化搭建，自带插件体系 |
 | Telegram / WhatsApp 客服机器人 | n8n | [官方库](https://n8n.io/workflows) 搜索 `chatbot` |

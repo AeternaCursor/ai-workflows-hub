@@ -8,6 +8,7 @@
 <meta property="og:description" content="从 1943 年人工神经元到 Agent 时代 —— 34 个关键事件，滚动即阅。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aeternacursor.github.io/ai-workflows-hub/">
+<meta property="og:image" content="https://raw.githubusercontent.com/AeternaCursor/ai-workflows-hub/main/docs/social-preview.png">
 <meta name="twitter:card" content="summary">
 <title>AI 发展史 · 动画时间线 | AI Workflows Hub</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
@@ -76,6 +77,24 @@
     background: linear-gradient(var(--bg) 75%, transparent);
     display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;
   }
+  /* 年份快速跳转 */
+  .era-nav {
+    display: flex; gap: 6px; overflow-x: auto; padding: 4px 2px 10px;
+    scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .era-nav::-webkit-scrollbar { height: 4px; }
+  .era-nav::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+  .era-link {
+    flex: 0 0 auto; border: 1px solid var(--line); background: transparent; color: var(--muted);
+    font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 8px;
+    cursor: pointer; transition: all .25s; font-family: inherit;
+  }
+  .era-link:hover { color: var(--text); border-color: var(--accent); }
+  .era-link.active {
+    color: #0a0e1a; background: var(--accent); border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(79,195,247,.5);
+  }
   .chip {
     border: 1px solid var(--line); background: var(--bg-soft); color: var(--muted);
     padding: 6px 14px; border-radius: 999px; font-size: 13px; cursor: pointer;
@@ -103,6 +122,7 @@
     position: relative; margin: 46px 0 18px 58px;
     font-size: 22px; font-weight: 800; letter-spacing: 1px; color: var(--text);
     opacity: 0; transform: translateY(16px); transition: all .6s ease;
+    scroll-margin-top: 120px;
   }
   .era.show { opacity: 1; transform: none; }
   .era::before {
@@ -183,6 +203,7 @@
   </header>
 
   <div class="controls" id="chips"></div>
+  <nav class="era-nav" id="eraNav" aria-label="年份快速跳转"></nav>
 
   <div class="timeline" id="timeline"></div>
 
@@ -258,6 +279,31 @@
     frag.appendChild(el);
   });
   tl.appendChild(frag);
+
+  // ---- 年份快速跳转导航 ----
+  const nav = document.getElementById("eraNav");
+  const eras = [...document.querySelectorAll(".era")];
+  eras.forEach(era => {
+    const b = document.createElement("button");
+    b.className = "era-link"; b.textContent = era.textContent;
+    b.onclick = () => era.scrollIntoView({ behavior: "smooth", block: "start" });
+    nav.appendChild(b);
+  });
+  const eraLinks = [...nav.children];
+  // 当前年份高亮
+  const eraIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = eras.indexOf(e.target);
+        eraLinks.forEach(l => l.classList.remove("active"));
+        if (eraLinks[idx]) {
+          eraLinks[idx].classList.add("active");
+          eraLinks[idx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+        }
+      }
+    });
+  }, { rootMargin: "-35% 0px -55% 0px" });
+  eras.forEach(el => eraIO.observe(el));
 
   // ---- 筛选逻辑 ----
   function applyFilter() {
