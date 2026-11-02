@@ -59,6 +59,43 @@ mutation markDone($id: ID!) {
 }
 ```
 
+## 案例 2（进阶）：高价值订单转人工审批——自动化不等于全自动
+
+场景：客单价 > ¥5000 的订单不敢让机器直接发货。加一道"人工卡点"。
+
+**数据流**：
+
+```
+Get all Unfulfilled orders → IF 金额>5000?
+   ├─ 否 → 原自动履约支线（不变）
+   └─ 是 → Slack 审批卡片（附订单详情+客户备注）
+          → 员工点"批准"按钮 → n8n Webhook 收到 → 走履约支线
+          → 24h 未处理 → 升级提醒 @店长
+```
+
+**Slack 审批卡片 payload（HTTP 节点请求体，交互按钮版）**：
+
+```json
+{ "text": "高价值订单待审批",
+  "blocks": [
+    { "type": "section", "text": { "type": "mrkdwn",
+      "text": "*订单 #{{order_id}}* ¥{{amount}}\n客户：{{name}}（{{email}}）\nSKU：{{skus}}" } },
+    { "type": "actions", "elements": [
+      { "type": "button", "action_id": "approve_ship",
+        "style": "primary", "text": { "type": "plain_text", "text": "批准发货" } },
+      { "type": "button", "action_id": "hold_review",
+        "style": "danger", "text": { "type": "plain_text", "text": "转人工核查" } } ] } ] }
+```
+
+**超时升级（Wait 节点 + IF）**：
+
+```
+发卡后 → Wait 24h → IF 该订单仍 unfulfilled（再查一次 Shopify）
+        → 是 → Slack @店长 "审批超时：#{{order_id}}"
+```
+
+**价值**：机器处理 95% 常规单，人只看 5% 高风险单——这是订单类自动化上生产前的标准护栏。
+
 ## 用 AI 迭代这个工作流（专属提示词）
 
 ```

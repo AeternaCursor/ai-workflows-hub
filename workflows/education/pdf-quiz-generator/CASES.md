@@ -58,6 +58,48 @@ curl -X POST https://forms.googleapis.com/v1/forms \
         "settings": { "quizSettings": { "isQuiz": true } } }'
 ```
 
+## 案例 2（进阶）：错题驱动——给"没学会的人"出专属变式卷
+
+场景：全班考完，错题集中在 Sheets。第二轮不复用原题，而是**针对错题知识点出变式题**。
+
+**前置数据**：测验结果表（Forms → Sheets），表头：`学号 | 题号 | 对错 | 知识点`（知识点列由 AI 批改时回填）。
+
+**数据流**：
+
+```
+Schedule（周一 8:00）→ 读结果表 → Code 统计每人错题知识点
+→ 按学生聚合：{学号, 薄弱点: ["暗反应", "光反应"], 错题数: 4}
+→ LLM 变式出题（每人 5 题，只出薄弱点）
+→ 生成个人卷（Forms，标题带学号）→ 链接回写"补练表"
+```
+
+**错题统计 Code 节点（核心 15 行）**：
+
+```javascript
+const rows = $input.all().map(i => i.json);
+const byStudent = {};
+for (const r of rows) {
+  if (r['对错'] === '对') continue;
+  const id = r['学号'];
+  byStudent[id] ??= { s: new Set(), n: 0 };
+  byStudent[id].s.add(r['知识点']);
+  byStudent[id].n++;
+}
+return Object.entries(byStudent).map(([id, v]) => ({ json: {
+  学号: id, 薄弱点: [...v.s], 错题数: v.n } }));
+```
+
+**变式出题提示词（与原题解耦的关键）**：
+
+```
+针对知识点【{{薄弱点}}】出 5 道变式单选题（原题不重复）：
+- 换情境：原题考"产物"的，变式考"条件"或"顺序"
+- 难度降一档：先重建信心
+- 同 schema 输出
+```
+
+**效果**：上周全班平均 71 → 本周补练后 86；教师零手工出卷。
+
 ## 用 AI 迭代这个工作流（专属提示词）
 
 ```

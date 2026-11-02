@@ -70,6 +70,49 @@ curl https://api.deepseek.com/chat/completions \
   -d '{"model":"deepseek-chat","messages":[{"role":"user","content":"回复OK两个字母"}]}'
 ```
 
+## 案例 2（进阶）：周报汇总版——一周邮件压成一张作战表
+
+场景：管理者只看周报。在原流程上加"周聚合支线"：Schedule Trigger 改为每周五 17:00，
+Gmail Fetch 时间窗改为 7 天，提示词升级为周报体。
+
+**AI 输出（示例，周五 17:02 收到）**：
+
+```
+【本周必办未闭环】
+1. Q4 预算表：周一收到，截至今天未回签 ⚠️（催办：老板）
+
+【本周已决事项】2 条
+【邮件量统计】共 141 封 | 老板 22 | 客户A 18 | 营销 71
+【下周预告】下周一 AWS 续费到期（供应商账单）
+
+【Top3 发件人需求画像】
+- 老板：审批类为主，平均期望响应 <4h
+- 客户A：交付节点确认，集中在周二/四
+```
+
+**关键改造（3 处）**：
+
+1. Trigger：`Daily 7AM` → 复制一条 `Friday 5PM`，时间窗 `Past 7 Days`
+2. Fetch 后加聚合 Code 节点：
+
+```javascript
+const emails = $input.all().map(i => i.json);
+const bySender = {};
+for (const e of emails) {
+  const k = e.from?.value?.[0]?.address ?? e.from ?? 'unknown';
+  bySender[k] = (bySender[k] ?? 0) + 1;
+}
+const top = Object.entries(bySender).sort((a, b) => b[1] - a[1]).slice(0, 3);
+return [{ json: { total: emails.length, top_senders: top, emails } }];
+```
+
+3. 提示词追加：
+
+```
+末尾输出【Top3 发件人需求画像】：对 top_senders 中每人，归纳其邮件主题类型与响应预期。
+标 ⚠️ 的条目 = 超过 48 小时未回复的事项，从邮件时间戳计算。
+```
+
 ## 用 AI 迭代这个工作流（专属提示词）
 
 把下面整段 + workflow.json（记得删 credentials 段）发给 AI：

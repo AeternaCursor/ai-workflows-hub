@@ -57,6 +57,34 @@ curl -X POST http://localhost:5678/webhook/pr-review \
        "head":{"ref":"feat/x"}}}'
 ```
 
+## 案例 2（进阶）：依赖升级 PR 专项审查——只盯 package.json/lock 的高危变更
+
+场景：`dependabot` 每周开十几个依赖升级 PR，人工看不过来。给本工作流加"依赖专项通道"：
+凡 diff 只含 `package.json` / `*.lock` 的 PR 走另一套审查逻辑。
+
+**路由 Code 节点（Extract PR Data 之后）**：
+
+```javascript
+const files = $json.files || [];
+const onlyDeps = files.length > 0 && files.every(f =>
+  /(^|\/)(package\.json|package-lock\.json|pnpm-lock\.yaml|yarn\.lock|requirements\.txt|go\.(mod|sum))$/.test(f.filename));
+return [{ json: { ...$json, route: onlyDeps ? 'deps' : 'code' } }];
+```
+
+**依赖审查提示词（deps 分支专用，与代码审查分支并列）**：
+
+```
+你是依赖治理专家。审查依赖变更 diff：
+1. 主版本号升级(major) = 大概率 breaking → verdict 至少 comment，列调用面排查清单
+2. patch 升级且是安全修复 → 直接 approve，说明 CVE 编号（如有）
+3. 新增依赖 → 检查周下载量<1k 或 6 个月未更新 → 标 risk
+4. 输出同 schema：labels 可用 risk/approve-fast
+diff：{{ $json.diff }}
+```
+
+**落地效果示例**：dependabot 17 个 PR → 12 个 patch 自动 approve-fast 打绿 ✅、
+4 个 major 打 `risk` 标+排查清单、1 个新增低质依赖被拦——人工只看 5 个。
+
 ## 用 AI 迭代这个工作流（专属提示词）
 
 ```

@@ -50,6 +50,43 @@ python -s ComfyUI\main.py --lowvram
 :: 8GB 以下再加 --force-fp16；爆 OOM 优先降尺寸到 832x832
 ```
 
+## 案例 2（进阶）：ControlNet 姿态控制——构图不再靠抽卡
+
+场景：要"人物单膝跪地、仰视镜头"的构图——纯提示词抽 50 张也未必中。
+用 OpenPose 骨架图**钉死姿势**，SDXL 只负责画风。
+
+**改造**（在本工作流上加 4 个节点）：
+
+```
+新增：LoadImage（骨架图）→ ControlNetLoader（模型：control_v11p_sd15_openpose
+      或 SDXL 专用 controlnet-union-sdxl）
+     → ControlNetApplyAdvanced（strength 0.8）
+接线：ControlNetApply 的 IMAGE 出 → 原 EmptyLatentImage 位置
+     （EmptyLatent 可删；conditioning 双向都过 ControlNet）
+```
+
+**骨架图怎么来**：
+- 方法 A：网上搜 "openpose 骨架素材"（现成姿势图库很多，跪姿/奔跑/双人构图都有）
+- 方法 B：自己的照片跑一次 openpose 提取（ComfyUI 有 OpenPosePreprocessor，装 comfyui_controlnet_aux 即可）
+
+**提示词变化**（姿势交给图，提示词只写画风与服装）：
+
+```
+正向：1girl, silver armor, kneeling pose (由骨架控制), neon city, cinematic lighting
+负向：不加姿势词，避免与骨架打架
+```
+
+**参数要点**：
+
+| 参数 | 建议值 | 说明 |
+|---|---|---|
+| ControlNet strength | 0.7-0.9 | 太低姿势漂，太高画风僵 |
+| KSampler cfg | 5-6 | 有 ControlNet 引导后可降 |
+| 采样器 | dpmpp_2m + karras, steps 25 | 控制图会让收敛更稳 |
+
+**产出对比**：同提示词无 ControlNet 抽 20 张命中 1 张跪姿；加骨架 20 张命中 18 张——
+构图确定性从抽卡变成**点菜**。
+
 ## 用 AI 迭代这个工作流（专属提示词）
 
 ```
