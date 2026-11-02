@@ -20,6 +20,7 @@
 
 ## 快速开始
 
+0. 零基础第一次上手 → 按 [从零实践指南](docs/quickstart.md) 走（n8n / ComfyUI / Dify 三条路线手把手）
 1. 想直接用工作流 → 从 [模板合集](resources/template-collections.md) 里挑一个导入
 2. 想按行业看 → 进入 [workflows/](workflows/) 目录选行业
 3. 不知道选哪个平台 → 看 [平台对比](resources/platforms.md)
