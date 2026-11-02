@@ -1,6 +1,8 @@
-# SDXL 文生图（简洁版）
+﻿# SDXL 文生图（简洁版）
 
 > 来源：[ComfyUI 官方模板 image_sdxl_simple](https://github.com/comfy-org/workflow_templates/blob/main/templates/image_sdxl_simple.json) · MIT · 11 KB
+
+> 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 
 最经典的 SDXL 文生图工作流：提示词 → KSampler → VAE 解码 → 保存。
 节点少、结构清晰，是学习 ComfyUI 的标准起点。

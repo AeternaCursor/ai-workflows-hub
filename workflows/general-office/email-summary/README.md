@@ -1,6 +1,8 @@
-# 邮件摘要 Agent
+﻿# 邮件摘要 Agent
 
 > 来源：[n8n 官方模板 #2722](https://n8n.io/workflows/2722) · 42k 浏览（高人气）· 9 节点
+
+> 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 
 Gmail 收到新邮件后自动调用 OpenAI 生成中文摘要，按重要度分级后推送——
 入门 n8n + LLM 的最佳第一课。

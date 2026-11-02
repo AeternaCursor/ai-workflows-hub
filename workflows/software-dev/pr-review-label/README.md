@@ -1,6 +1,8 @@
-# AI 代码审查与 PR 自动打标
+﻿# AI 代码审查与 PR 自动打标
 
 > 来源：[n8n 官方模板 #11967](https://n8n.io/workflows/11967) · 22 节点
+
+> 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 
 GitHub 新 PR → 提取 diff → GPT-4o-mini 按团队规范审查 → 自动打标签 →
 结果推送 Slack，维护者只需看摘要。

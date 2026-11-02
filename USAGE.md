@@ -7,6 +7,7 @@
 | 你想做什么 | 去哪里 |
 |---|---|
 | 零基础第一次跑通一个 AI 工作流 | [docs/quickstart.md](docs/quickstart.md)（n8n/ComfyUI/Dify 手把手，含安装与 Key 申请） |
+| 逐个工作流的详细实操（逐节点/提示词/排错） | 各工作流目录内的 `TUTORIAL.md`（12 个全覆盖） |
 | 找可直接导入的 AI 工作流模板 | [resources/template-collections.md](resources/template-collections.md) → 按平台挑 → 导入 |
 | 按行业找（金融/营销/电商…） | [workflows/](workflows/) 对应行业目录 |
 | 了解 AI 发展史（动画时间线） | [在线版](https://aeternacursor.github.io/ai-workflows-hub/) 或 [timeline/index.html](timeline/index.html) |
