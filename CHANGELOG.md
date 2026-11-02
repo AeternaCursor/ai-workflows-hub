@@ -2,6 +2,7 @@
 
 格式：`- YYYY-MM-DD 变更内容（来源）`，新条目追加在最上方。
 
+- 2026-11-02 时间线中英双语（36 事件全量翻译 + 切换记忆）；周维护首跑：收录 gh-aw 正式发布（10-28 GA）与 DeepSeek Super-agent 架构（10-31）
 - 2026-11-02 工作流收录补齐至 12 个（新增软件研发/教育/法务，10/10 行业全覆盖）；platforms.md Stars 改实时徽章；时间线年份导航常驻（sticky）
 - 2026-11-02 收录 9 个即用工作流（n8n 官方模板 ×6 + ComfyUI 官方模板 ×3，含凭据清单）；新增链接健康检查 workflow；时间线加年份快速跳转；生成社交预览图与 og:image；添加 Topics 与徽章
 - 2026-11-02 新增 AI 发展史动画时间线（timeline/）、使用说明（USAGE.md）、AI 维护提示词（prompts/update-hub.md）、每周动态捕捉 workflow

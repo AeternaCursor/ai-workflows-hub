@@ -1,10 +1,9 @@
 # AI 发展史时间线
 
-动画时间线页面，数据与展示完全分离 —— **新增事件只需编辑 [data.js](data.js)**。
+中英双语动画时间线页面，数据与展示完全分离 —— **新增事件只需编辑 [data.js](data.js)**。
 
-## 本地预览
-
-双击打开 `index.html` 即可（无需服务器，数据以内联脚本加载）。
+- 本地预览：双击 `index.html`（无需服务器）
+- 右上角 **EN / 中文** 按钮切换语言，选择会被记住（localStorage）
 
 ## 添加事件
 
@@ -13,7 +12,10 @@
 ```js
 { year: "2026", date: "2026-11", title: "事件标题", cat: "agent",
   desc: "一两句话说清楚这件事为什么重要。",
-  link: "https://..." }   // link 可选
+  link: "https://...",            // link 可选：来源链接
+  titleEn: "Title in English",    // 可选：英文标题
+  descEn: "One-liner in English." // 可选：英文描述（缺失时英文模式回退显示中文）
+}
 ```
 
 `cat` 分类与颜色（定义在 `CATEGORIES` 中）：

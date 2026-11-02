@@ -15,7 +15,7 @@ Stars 为实时徽章（自动更新，无需维护）：
 | [Langflow](https://github.com/langflow-ai/langflow) | ![Langflow stars](https://img.shields.io/github/stars/langflow-ai/langflow?style=flat-square) | Python | 本地 / 云 | 快速原型 RAG / Agent | ⭐⭐⭐ 内置模板 |
 | [Flowise](https://github.com/FlowiseAI/Flowise) | ![Flowise stars](https://img.shields.io/github/stars/FlowiseAI/Flowise?style=flat-square) | TS | 本地 / 云 | 低代码 LLM 编排、聊天机器人 | ⭐⭐⭐ 社区模板 |
 | [Activepieces](https://github.com/activepieces/activepieces) | ![Activepieces stars](https://img.shields.io/github/stars/activepieces/activepieces?style=flat-square) | TS | 自托管 / 云 | 轻量自动化（开源 Zapier 替代） | ⭐⭐⭐ 官方 piece 市场 |
-| [gh-aw](https://github.com/github/gh-aw) | 官方 | - | GitHub Actions | 代码仓库内的 AI Agent（issue 分诊、PR 审查） | ⭐⭐⭐ 官方示例集 |
+| [gh-aw](https://github.com/github/gh-aw) | 官方 | - | GitHub Actions | 代码仓库内的 AI Agent（issue 分诊、PR 审查）——2026-10-28 已 GA | ⭐⭐⭐ 官方示例集 |
 
 ## 选型建议
 

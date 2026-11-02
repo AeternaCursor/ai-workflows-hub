@@ -49,10 +49,12 @@
 ```js
 { year: "2026", date: "2026-11", title: "事件标题", cat: "agent",
   desc: "≤60字，说清这件事为什么重要。",
-  link: "https://官方来源" }
+  link: "https://官方来源",
+  titleEn: "English Title", descEn: "≤160 chars, why it matters." }
 ```
 
 `cat` 仅可取：`foundation` / `model` / `tools` / `agent` / `opensource` / `multimodal`。
+`titleEn` / `descEn` 可选（英文模式缺失时回退显示中文，新事件尽量补全）。
 
 ### 第四步：验证
 

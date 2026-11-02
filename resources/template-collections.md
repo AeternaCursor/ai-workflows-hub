@@ -30,5 +30,5 @@
 
 ## GitHub 官方
 
-- [github/gh-aw](https://github.com/github/gh-aw) — GitHub Agentic Workflows：用 Markdown 定义 AI 工作流，跑在 Actions 里，MIT 协议
+- [github/gh-aw](https://github.com/github/gh-aw) — GitHub Agentic Workflows（2026-10-28 正式发布）：用 Markdown 定义 AI 工作流，跑在 Actions 里，MIT 协议
 - 示例仓库：githubnext/agentics — issue 分诊、PR 审查、自动修 bug
