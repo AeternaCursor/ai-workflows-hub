@@ -3,6 +3,7 @@
 > 来源：[n8n 官方模板 #12400](https://n8n.io/workflows/12400) · 38 节点
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 用 Redis + LangCache 实现「缓存优先」的 RAG 客服：高频问题直接命中缓存回答（零 LLM 成本），
 未命中才走 OpenAI 向量检索生成，显著降低规模化客服的 Token 开销。

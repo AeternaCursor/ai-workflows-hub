@@ -3,8 +3,9 @@
 > 仓库里收的是"武器"，本文教你**从零开第一枪**。
 > 三条路线选一条即可，互不依赖。Windows 电脑优先适配，Mac/Linux 同理。
 >
-> 路线跑通后，回到 [workflows/](../workflows/) 挑具体业务工作流——
-> **12 个工作流每个目录里都有 TUTORIAL.md 手把手实操教程**（配凭据、逐节点讲解、排错表）。
+> 路线跑通后，回到 [workflows/](../workflows/) 挑具体业务工作流——每个工作流三件套：
+> **TUTORIAL.md**（手把手实操）+ **CASES.md**（实操案例与代码示例）+
+> **README.md**（凭据与步骤速览）。改造成自己的业务，用 [AI 定制提示词](../prompts/customize-workflow.md)。
 
 ## 怎么选路线
 

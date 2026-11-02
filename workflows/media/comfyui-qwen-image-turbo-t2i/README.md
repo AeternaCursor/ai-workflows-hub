@@ -3,6 +3,7 @@
 > 来源：[ComfyUI 官方模板 image_qwen_image_2_1_turbo_t2i](https://github.com/comfy-org/workflow_templates/blob/main/templates/image_qwen_image_2_1_turbo_t2i.json) · MIT
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 阿里 Qwen-Image 2.1 Turbo 两步出图：中文提示词理解强、显存占用低（int8 量化），
 适合批量生成电商图与营销素材。

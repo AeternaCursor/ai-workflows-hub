@@ -2,6 +2,7 @@
 
 格式：`- YYYY-MM-DD 变更内容（来源）`，新条目追加在最上方。
 
+- 2026-11-02 新增 12 份 CASES.md（实操案例：输入→输出全程演示；代码示例：Code节点/提示词/API脚本；AI 迭代专属提示词）+ 通用定制总纲 prompts/customize-workflow.md
 - 2026-11-02 为全部 12 个工作流新增 TUTORIAL.md 手把手实操教程（基于真实节点结构：前置清单、逐节点配置、提示词定制、验证标准、排错表）
 - 2026-11-02 新增从零实践指南 docs/quickstart.md（n8n/ComfyUI/Dify 三路线手把手，含安装、Key 申请与常见报错）；About 栏补 Website 链接并修复中文乱码
 - 2026-11-02 时间线中英双语（36 事件全量翻译 + 切换记忆）；周维护首跑：收录 gh-aw 正式发布（10-28 GA）与 DeepSeek Super-agent 架构（10-31）

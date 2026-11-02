@@ -3,6 +3,7 @@
 > 来源：[n8n 官方模板 #12012](https://n8n.io/workflows/12012) · 17 节点
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 上传课程 PDF → OpenAI 按知识点生成选择题 → 自动创建 Google Forms 测验，
 教师只做最终审校。

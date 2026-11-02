@@ -3,6 +3,7 @@
 > 来源：[n8n 官方模板 #4247](https://n8n.io/workflows/4247) · 13.7k 浏览 · 22 节点
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 对上传的发票做 OCR 提取 → OpenRouter LLM 校验（金额/税号/日期一致性）→
 结果与异常标记写入 Google Sheets，供财务复核。

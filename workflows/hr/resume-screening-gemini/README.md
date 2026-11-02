@@ -3,6 +3,7 @@
 > 来源：[n8n 官方模板 #3765](https://n8n.io/workflows/3765) · 5.1k 浏览 · 67 节点
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 用 Gemini 读取 Google Drive 中的简历，按岗位要求评分写入 Google Sheets，
 并通过 Notion ATS 管理候选人 + ElevenLabs 生成语音面试问题。

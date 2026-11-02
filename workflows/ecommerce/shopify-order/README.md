@@ -3,6 +3,7 @@
 > 来源：[n8n 官方模板 #3296](https://n8n.io/workflows/3296) · 3.1k 浏览 · 13 节点
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 监听 Shopify 新订单，自动完成核对、通知仓储与物流、更新订单状态的履约闭环。
 

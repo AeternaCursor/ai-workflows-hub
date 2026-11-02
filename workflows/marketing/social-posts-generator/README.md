@@ -3,6 +3,7 @@
 > 来源：[n8n 官方模板 #8965](https://n8n.io/workflows/8965) · 1.9k 浏览 · 43 节点
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 用 Gemini 生成图文内容，经 Kie.ai / Zernio API 生成配图并自动发布到多个社媒平台。
 

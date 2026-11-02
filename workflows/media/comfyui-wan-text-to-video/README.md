@@ -3,6 +3,7 @@
 > 来源：[ComfyUI 官方模板 text_to_video_wan](https://github.com/comfy-org/workflow_templates/blob/main/templates/text_to_video_wan.json) · MIT
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
 阿里通义万相 Wan2.1 1.3B 文生视频，消费级显卡（8GB 显存）可跑，
 全部使用原生节点，无需安装自定义插件。
