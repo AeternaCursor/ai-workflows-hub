@@ -10,13 +10,18 @@
 - 🏭 **按行业找**：金融、营销、电商、法务、HR、教育、内容创作、客服、软件研发、通用办公
 - 🧰 **按平台找**：n8n / Dify / Coze Studio / Langflow / Flowise / ComfyUI / GitHub Agentic Workflows
 - 📦 **拿来即用**：每个条目注明运行平台、所需凭据、可导入文件
+- 🕰️ **AI 发展史**：[动画时间线](timeline/index.html)，从 1943 年人工神经元到 Agent 时代
+- 🔄 **持续维护**：每周定时捕捉新动态，[AI 提示词驱动更新](prompts/update-hub.md)
 
 ## 快速开始
 
 1. 想直接用工作流 → 从 [模板合集](resources/template-collections.md) 里挑一个导入
 2. 想按行业看 → 进入 [workflows/](workflows/) 目录选行业
 3. 不知道选哪个平台 → 看 [平台对比](resources/platforms.md)
-4. 想贡献自己的工作流 → 读 [贡献指南](CONTRIBUTING.md)
+4. 想看 AI 发展史 → 打开 [动画时间线](timeline/index.html)
+5. 想贡献自己的工作流 → 读 [贡献指南](CONTRIBUTING.md)
+
+完整说明见 [USAGE.md](USAGE.md)。
 
 ## 行业 × 平台 索引
 
@@ -57,9 +62,26 @@ ai-workflows-hub/
 │   ├── platforms.md            # 平台引擎对比
 │   ├── template-collections.md # 通用模板合集
 │   └── industry-references.md  # 行业标杆参考实现
+├── timeline/           # AI 发展史动画时间线（编辑 data.js 即可扩展）
+├── prompts/            # AI 维护提示词（update-hub.md）
+├── .github/workflows/  # 每周定时动态捕捉提醒
+├── USAGE.md            # 使用说明
+├── CHANGELOG.md        # 更新日志
 ├── CONTRIBUTING.md     # 贡献指南
 └── LICENSE             # MIT
 ```
+
+## 维护机制
+
+AI 发展快，本仓库用「定时提醒 + AI 提示词」保持更新：
+
+```
+每周一 09:00 GitHub Actions 自动建周报 Issue
+   → 复制 prompts/update-hub.md 给任意 AI 助手
+   → AI 检索本周动态 → 按规范更新对应文件 → 人工审阅合并
+```
+
+详见 [USAGE.md](USAGE.md) 的「维护者日常更新」一节。
 
 ## 贡献
 

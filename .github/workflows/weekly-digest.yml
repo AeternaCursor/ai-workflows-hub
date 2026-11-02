@@ -1,0 +1,68 @@
+name: Weekly AI Digest Reminder
+
+# 每周一 09:00（北京时间 = UTC 周一 01:00）自动创建周报 Issue，
+# 提醒执行 prompts/update-hub.md 的 AI 维护流程。
+# 注意：纯 schedule 的 workflow 在仓库 60 天无活动后会被 GitHub 自动禁用，
+# 收到禁用通知邮件后点 Enable 即可。
+
+on:
+  schedule:
+    - cron: "0 1 * * 1"
+  workflow_dispatch: {}  # 支持手动触发
+
+permissions:
+  issues: write
+
+jobs:
+  create-digest-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create weekly digest issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0, 10);
+            const title = `[周报] AI 工作流动态捕捉 - ${dateStr}`;
+
+            // 查重：已有未关闭的同标题 Issue 则跳过
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+            if (existing.data.some(i => i.title === title)) {
+              core.info('本周 Issue 已存在，跳过');
+              return;
+            }
+
+            const body = [
+              '## 本周维护任务',
+              '',
+              'AI 领域发展快，请按以下流程更新仓库：',
+              '',
+              '1. 复制 [`prompts/update-hub.md`](../blob/main/prompts/update-hub.md) 全文',
+              '2. 粘贴给任意 AI 助手（需联网搜索 + 仓库写入权限）',
+              '3. 替换提示词中的日期占位符为今天',
+              '4. 审阅 AI 产出的 diff，合并后在本 Issue 回复变更摘要并关闭',
+              '',
+              '### 本周检索主题',
+              '- [ ] 新 AI 工作流 / Agent 开源项目',
+              '- [ ] n8n / Dify / Coze / ComfyUI 更新与新模板',
+              '- [ ] MCP 等协议进展',
+              '- [ ] 值得记入时间线的重大事件（`timeline/data.js`）',
+              '',
+              '---',
+              `_由 weekly-digest workflow 于 ${now.toISOString()} 自动创建_`
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['weekly-digest']
+            });

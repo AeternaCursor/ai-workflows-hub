@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 发展史 · 动画时间线 | AI Workflows Hub</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<script src="data.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-soft: #101627;
+    --card: #131b30;
+    --line: #2a3550;
+    --text: #e8ecf5;
+    --muted: #8b93a8;
+    --accent: #4fc3f7;
+    --accent2: #c792ea;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+    overflow-x: hidden;
+  }
+  /* 背景装饰 */
+  .bg-glow {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(600px 400px at 15% 10%, rgba(79,195,247,.10), transparent 60%),
+      radial-gradient(600px 400px at 85% 30%, rgba(199,146,234,.08), transparent 60%),
+      radial-gradient(800px 500px at 50% 90%, rgba(105,240,174,.06), transparent 60%);
+  }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .35;
+    background-image:
+      linear-gradient(rgba(42,53,80,.25) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42,53,80,.25) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+  }
+  .wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+  /* ===== 头部 ===== */
+  header { text-align: center; padding: 72px 0 40px; }
+  .badge {
+    display: inline-block; font-size: 13px; letter-spacing: 2px;
+    color: var(--accent); border: 1px solid rgba(79,195,247,.35);
+    padding: 6px 16px; border-radius: 999px; margin-bottom: 22px;
+    background: rgba(79,195,247,.06);
+  }
+  h1 {
+    font-size: clamp(34px, 6vw, 56px); font-weight: 800; line-height: 1.15;
+    background: linear-gradient(120deg, #fff 20%, var(--accent) 55%, var(--accent2) 90%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: rise .9s ease both;
+  }
+  .subtitle { color: var(--muted); margin-top: 14px; font-size: 16px; animation: rise .9s .15s ease both; }
+  .stats { display: flex; justify-content: center; gap: 44px; margin-top: 34px; animation: rise .9s .3s ease both; }
+  .stat b { display: block; font-size: 30px; color: var(--accent); }
+  .stat span { font-size: 13px; color: var(--muted); }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+  /* ===== 筛选与控制 ===== */
+  .controls {
+    position: sticky; top: 0; z-index: 10; padding: 14px 0 12px;
+    background: linear-gradient(var(--bg) 75%, transparent);
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center;
+  }
+  .chip {
+    border: 1px solid var(--line); background: var(--bg-soft); color: var(--muted);
+    padding: 6px 14px; border-radius: 999px; font-size: 13px; cursor: pointer;
+    transition: all .25s; user-select: none;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--text); }
+  .chip.on { color: #0a0e1a; font-weight: 600; border-color: transparent; }
+  .chip .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+  .tour-btn {
+    margin-left: 8px; border: 1px solid rgba(199,146,234,.4); background: rgba(199,146,234,.08);
+    color: var(--accent2); padding: 6px 16px; border-radius: 999px; font-size: 13px;
+    cursor: pointer; transition: all .25s;
+  }
+  .tour-btn:hover { background: rgba(199,146,234,.18); }
+  .tour-btn.running { animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(199,146,234,.45); } 50% { box-shadow: 0 0 0 8px rgba(199,146,234,0); } }
+
+  /* ===== 时间线 ===== */
+  .timeline { position: relative; margin-top: 30px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 19px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, transparent, var(--line) 8%, var(--line) 92%, transparent);
+  }
+  .era {
+    position: relative; margin: 46px 0 18px 58px;
+    font-size: 22px; font-weight: 800; letter-spacing: 1px; color: var(--text);
+    opacity: 0; transform: translateY(16px); transition: all .6s ease;
+  }
+  .era.show { opacity: 1; transform: none; }
+  .era::before {
+    content: ""; position: absolute; left: -46px; top: 50%; transform: translateY(-50%);
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 14px var(--accent);
+  }
+  .event {
+    position: relative; margin: 0 0 26px 58px;
+    opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease;
+  }
+  .event.show { opacity: 1; transform: none; }
+  .event.hide { display: none; }
+  .event .node {
+    position: absolute; left: -45px; top: 22px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--c, var(--accent)); border: 3px solid var(--bg);
+    box-shadow: 0 0 10px var(--c, var(--accent));
+    animation: none;
+  }
+  .event.show .node { animation: nodeIn .5s ease both; }
+  @keyframes nodeIn { from { transform: scale(0); } to { transform: scale(1); } }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; transition: transform .3s, border-color .3s, box-shadow .3s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--c, var(--accent)); opacity: .85;
+  }
+  .card:hover {
+    transform: translateX(6px); border-color: var(--c, var(--accent));
+    box-shadow: 0 8px 30px rgba(0,0,0,.45);
+  }
+  .card .meta { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .card .date {
+    font-size: 12px; font-weight: 700; letter-spacing: .5px;
+    color: var(--c, var(--accent)); background: color-mix(in srgb, var(--c, var(--accent)) 12%, transparent);
+    padding: 3px 10px; border-radius: 6px;
+  }
+  .card .cat { font-size: 12px; color: var(--muted); }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 14px; line-height: 1.75; color: var(--muted); }
+  .card a {
+    display: inline-block; margin-top: 12px; font-size: 13px; color: var(--c, var(--accent));
+    text-decoration: none; border-bottom: 1px dashed currentColor; padding-bottom: 1px;
+  }
+  .card a:hover { opacity: .75; }
+
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 60px; line-height: 2; }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .stats { gap: 26px; }
+    .timeline::before { left: 13px; }
+    .era { margin-left: 42px; }
+    .event { margin-left: 42px; }
+    .event .node { left: -35px; }
+    .era::before { left: -38px; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<div class="wrap">
+  <header>
+    <div class="badge">AI WORKFLOWS HUB · TIMELINE</div>
+    <h1>人工智能发展史</h1>
+    <div class="subtitle">从 1943 年的人工神经元到 Agent 时代 —— 一条滚动即阅的时间线</div>
+    <div class="stats">
+      <div class="stat"><b id="st-events">0</b><span>关键事件</span></div>
+      <div class="stat"><b id="st-span">0</b><span>跨越年份</span></div>
+      <div class="stat"><b id="st-cats">0</b><span>领域分类</span></div>
+    </div>
+  </header>
+
+  <div class="controls" id="chips"></div>
+
+  <div class="timeline" id="timeline"></div>
+
+  <footer>
+    数据与展示分离：新增事件只需编辑 <a href="data.js">timeline/data.js</a><br>
+    属于 <a href="https://github.com/AeternaCursor/ai-workflows-hub">AI Workflows Hub</a> · 持续更新中
+  </footer>
+</div>
+
+<script>
+(function () {
+  const cats = window.CATEGORIES, data = window.TIMELINE_DATA;
+  data.sort((a, b) => a.date.localeCompare(b.date));
+
+  // ---- 统计 ----
+  const years = data.map(d => +d.year);
+  document.getElementById("st-events").textContent = data.length;
+  document.getElementById("st-span").textContent = Math.max(...years) - Math.min(...years);
+  document.getElementById("st-cats").textContent = Object.keys(cats).length;
+
+  // ---- 筛选 chips ----
+  const active = new Set(Object.keys(cats));
+  const chipsBox = document.getElementById("chips");
+  const mkChip = (key, label, color, all) => {
+    const el = document.createElement("button");
+    el.className = "chip on";
+    el.innerHTML = (all ? "✦ " : `<span class="dot" style="background:${color}"></span>`) + label;
+    el.onclick = () => {
+      if (all) { active.clear(); Object.keys(cats).forEach(k => active.add(k)); }
+      else { active.has(key) ? active.delete(key) : active.add(key); }
+      document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on",
+        c === el ? !c.classList.contains("on") || true : c.classList.contains("on")));
+      // 重算每个 chip 状态
+      document.querySelectorAll(".chip").forEach(c => {
+        const k = c.dataset.key;
+        c.classList.toggle("on", k === "__all" ? active.size === Object.keys(cats).length : active.has(k));
+      });
+      applyFilter();
+    };
+    el.dataset.key = all ? "__all" : key;
+    return el;
+  };
+  chipsBox.appendChild(mkChip(null, "全部", null, true));
+  Object.entries(cats).forEach(([k, v]) => chipsBox.appendChild(mkChip(k, v.name, v.color)));
+  const tourBtn = document.createElement("button");
+  tourBtn.className = "tour-btn"; tourBtn.textContent = "▶ 自动巡览";
+  chipsBox.appendChild(tourBtn);
+
+  // ---- 渲染时间线 ----
+  const tl = document.getElementById("timeline");
+  let lastEra = null, frag = document.createDocumentFragment();
+  data.forEach(ev => {
+    if (ev.year !== lastEra) {
+      const era = document.createElement("div");
+      era.className = "era"; era.textContent = ev.year; era.dataset.cat = "era";
+      frag.appendChild(era); lastEra = ev.year;
+    }
+    const c = cats[ev.cat] || {};
+    const el = document.createElement("div");
+    el.className = "event"; el.dataset.cat = ev.cat;
+    el.style.setProperty("--c", c.color || "var(--accent)");
+    el.innerHTML = `
+      <span class="node" style="--c:${c.color || "var(--accent)"}"></span>
+      <div class="card" style="--c:${c.color || "var(--accent)"}">
+        <div class="meta">
+          <span class="date">${ev.date}</span>
+          <span class="cat">${c.name || ev.cat}</span>
+        </div>
+        <h3>${ev.title}</h3>
+        <p>${ev.desc}</p>
+        ${ev.link ? `<a href="${ev.link}" target="_blank" rel="noopener">查看来源 ↗</a>` : ""}
+      </div>`;
+    frag.appendChild(el);
+  });
+  tl.appendChild(frag);
+
+  // ---- 筛选逻辑 ----
+  function applyFilter() {
+    document.querySelectorAll(".event").forEach(el =>
+      el.classList.toggle("hide", !active.has(el.dataset.cat)));
+  }
+
+  // ---- 进入动画 ----
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("show"); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll(".event, .era").forEach(el => io.observe(el));
+
+  // ---- 自动巡览 ----
+  let touring = false, rafId = null;
+  tourBtn.onclick = () => {
+    touring = !touring;
+    tourBtn.textContent = touring ? "⏸ 停止巡览" : "▶ 自动巡览";
+    tourBtn.classList.toggle("running", touring);
+    if (touring) {
+      scrollTo({ top: 0, behavior: "instant" });
+      let last = performance.now();
+      const step = t => {
+        if (!touring) return;
+        window.scrollBy(0, (t - last) * 0.06); // 速度 ~3.6px/frame·s
+        last = t;
+        if (scrollY + innerHeight < document.body.scrollHeight) rafId = requestAnimationFrame(step);
+        else stop();
+      };
+      rafId = requestAnimationFrame(step);
+    } else stop();
+  };
+  function stop() { touring = false; cancelAnimationFrame(rafId); tourBtn.textContent = "▶ 自动巡览"; tourBtn.classList.remove("running"); }
+  addEventListener("wheel", stop, { passive: true });
+  addEventListener("touchstart", stop, { passive: true });
+})();
+</script>
+</body>
+</html>
