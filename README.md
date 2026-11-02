@@ -29,6 +29,19 @@
 
 完整说明见 [USAGE.md](USAGE.md)。
 
+## 学习路径
+
+```mermaid
+flowchart LR
+    A[零基础] -->|docs/quickstart.md| B[装好平台<br/>跑通第一个]
+    B -->|TUTORIAL.md| C[逐节点吃透<br/>12 个工作流]
+    C -->|CASES.md| D[看真实案例<br/>抄代码]
+    D -->|customize-workflow.md| E[AI 改造成<br/>自己的业务]
+    E -->|CONTRIBUTING.md| F[贡献回来<br/>案例 3 起追加]
+    style A fill:#1a2238,color:#8b93a8
+    style F fill:#1f3b2c,color:#69f0ae
+```
+
 ## 行业 × 平台 索引
 
 | 行业 | 目录 | 推荐平台 | 现成参考 |

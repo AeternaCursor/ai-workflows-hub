@@ -4,44 +4,44 @@
 
 ## 贡献类型
 
-1. **新工作流**：可导入的导出文件（n8n JSON / Dify DSL YAML / ComfyUI workflow JSON）+ 说明文档
+1. **新工作流**：四件套（workflow.json + README + TUTORIAL + CASES，见下）
 2. **资源推荐**：精选的模板合集、行业参考实现（提 Issue 或 PR 皆可）
 3. **行业目录新增**：当前未覆盖的行业（制造、医疗、物流……）
+4. **案例补充**：为现有哪些工作流追加你的真实使用案例（CASES.md 追加"案例 3"起）
 
-## 工作流提交格式
+## 工作流提交格式（四件套标准）
 
-在对应行业目录下新建子目录：
+在对应行业目录下新建子目录，**完整收录 = 四件套**（缺一件视为不完整，review 时会要求补齐）：
 
 ```
 workflows/<industry>/<workflow-name>/
-├── README.md            # 必需：说明文档
-├── workflow.json        # 必需：平台导出文件（或 .yaml）
-└── assets/              # 可选：截图、示例输入输出
+├── README.md        # 必需：速览卡（来源/平台/凭据/触发/输入输出 + 教程链接）
+├── workflow.json    # 必需：平台导出文件（或 .yaml）
+├── TUTORIAL.md      # 必需：手把手实操（前置清单→逐节点配置→提示词定制→验证标准→排错表）
+└── CASES.md         # 必需：≥1 个实操案例（输入→输出全程）+ 代码示例 + AI 迭代提示词
 ```
 
-### workflow README 模板
+> 只想先收录 workflow.json 而暂时没写教程？可以，PR 标题加 `[WIP]`，
+> 但请在 Issue 里注明补齐时间；四件套齐了才移出 WIP。
+
+### README 模板
 
 ```markdown
 # 工作流名称
 
-一句话描述它做什么。
+> 来源：[平台官方模板 #id](链接) · N 节点
+> 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
+> 🧪 实操案例与代码：[CASES.md](CASES.md)
 
-- **平台**：n8n 1.x / Dify 0.x / ComfyUI ...
-- **所需凭据**：OpenAI API Key、Gmail OAuth ...
-- **触发方式**：手动 / 定时 / Webhook
-- **输入**：...
-- **输出**：...
-
-## 使用步骤
-
-1. 导入文件
-2. 配置凭据
-3. ...
-
-## 注意事项
-
-成本提示、频率限制、合规提醒等。
+一句话描述。
+- **平台** / **所需凭据** / **触发方式** / **输入** / **输出**
 ```
+
+### TUTORIAL / CASES 写法参照
+
+仓库内 12 个现成工作流即为范本（如
+[workflows/general-office/email-summary/](workflows/general-office/email-summary/)）。
+核心要求：TUTORIAL 按"真实节点名"逐步讲解；CASES 的案例必须有输入与输出示例。
 
 ## 收录标准
 
