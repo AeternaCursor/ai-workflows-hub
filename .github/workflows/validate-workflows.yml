@@ -1,0 +1,56 @@
+name: Validate Workflow Folders (Four-Piece Standard)
+
+# PR 触碰 workflows/ 时自动校验四件套完整性（借鉴 awesome-selfhosted 的 CI 治理模式）：
+# 每个被改动的工作流目录必须同时含 README.md + workflow.json(yaml) + TUTORIAL.md + CASES.md
+# 缺件直接让 check 失败，标准从"文档约定"升级为"机器强制"。规范见 CONTRIBUTING.md。
+
+on:
+  pull_request:
+    paths: ["workflows/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check four-piece completeness
+        run: |
+          set -euo pipefail
+          BASE="${{ github.event.pull_request.base.sha }}"
+          # PR 中被改动的 工作流目录（workflows/<行业>/<slug>，第三层路径才算工作流目录，
+          # 行业级 workflows/<行业>/README.md 不会被误伤）
+          DIRS=$(git diff --name-only --diff-filter=ACMR "$(git merge-base "$BASE" HEAD)" HEAD -- 'workflows/*' \
+                 | grep -E '^workflows/[^/]+/[^/]+/' | cut -d/ -f1-3 | sort -u || true)
+          if [ -z "$DIRS" ]; then
+            echo "No workflow folders touched."
+            exit 0
+          fi
+          FAIL=0
+          for d in $DIRS; do
+            echo "==> Checking $d"
+            for f in README.md TUTORIAL.md CASES.md; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::缺少 $f —— 四件套标准（README/workflow.json/TUTORIAL/CASES），见 CONTRIBUTING.md。暂无法补齐请给 PR 标 [WIP]"
+                FAIL=1
+              fi
+            done
+            if [ ! -f "$d/workflow.json" ] && [ ! -f "$d/workflow.yaml" ]; then
+              echo "::error file=$d::缺少 workflow.json 或 workflow.yaml"
+              FAIL=1
+            fi
+            # README 应链接教程与案例
+            if [ -f "$d/README.md" ] && ! grep -q "TUTORIAL" "$d/README.md"; then
+              echo "::warning file=$d/README.md::建议在 README 顶部加 📖 TUTORIAL.md 链接"
+            fi
+          done
+          if [ "$FAIL" -eq 1 ]; then
+            echo ""
+            echo "四件套校验未通过。参考范本：workflows/general-office/email-summary/"
+          fi
+          exit $FAIL
