@@ -1,0 +1,779 @@
+﻿{
+    "id":  "fWklcJx1u2X1B2UA",
+    "meta":  {
+                 "instanceId":  "277842713620d9f5554de3b1518b865a152c8c4db680008bd8aec536fc18b4a8"
+             },
+    "name":  "AI Medical Intake: Smart Triage, Provider Briefs \u0026 Emergency Detection",
+    "tags":  [
+                 {
+                     "id":  "TDW7E4RVCMchXf5b",
+                     "name":  "published",
+                     "createdAt":  "2025-10-13T01:18:01.305Z",
+                     "updatedAt":  "2025-10-13T01:18:01.305Z"
+                 }
+             ],
+    "nodes":  [
+                  {
+                      "id":  "71b9b490-6060-4af5-94e8-34525de13db5",
+                      "name":  "Extract Patient Data",
+                      "type":  "n8n-nodes-base.set",
+                      "position":  [
+                                       -1280,
+                                       240
+                                   ],
+                      "parameters":  {
+                                         "options":  {
+
+                                                     },
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "patient_name",
+                                                                                     "name":  "patient_name",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q3_fullName?.first || \u0027\u0027 }} {{ $json.q3_fullName?.last || \u0027\u0027 }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "patient_email",
+                                                                                     "name":  "patient_email",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q4_email }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "patient_phone",
+                                                                                     "name":  "patient_phone",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q5_phone }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "date_of_birth",
+                                                                                     "name":  "date_of_birth",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q6_dateOfBirth }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "reason_for_visit",
+                                                                                     "name":  "reason_for_visit",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q7_reasonForVisit }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "symptoms",
+                                                                                     "name":  "symptoms",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q8_symptoms }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "symptom_duration",
+                                                                                     "name":  "symptom_duration",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q9_duration }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "pain_level",
+                                                                                     "name":  "pain_level",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q10_painLevel || \u0027N/A\u0027 }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "current_medications",
+                                                                                     "name":  "current_medications",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q11_medications || \u0027None\u0027 }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "allergies",
+                                                                                     "name":  "allergies",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q12_allergies || \u0027None\u0027 }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "medical_history",
+                                                                                     "name":  "medical_history",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q13_medicalHistory || \u0027None reported\u0027 }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "insurance_provider",
+                                                                                     "name":  "insurance_provider",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q14_insurance || \u0027Self-pay\u0027 }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "preferred_date",
+                                                                                     "name":  "preferred_date",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q15_preferredDate }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "preferred_time",
+                                                                                     "name":  "preferred_time",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ $json.q16_preferredTime }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "intake_id",
+                                                                                     "name":  "intake_id",
+                                                                                     "type":  "string",
+                                                                                     "value":  "=MED-{{ $json.submissionID }}-{{ Date.now() }}"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "submission_date",
+                                                                                     "name":  "submission_date",
+                                                                                     "type":  "string",
+                                                                                     "value":  "={{ new Date().toISOString() }}"
+                                                                                 }
+                                                                             ]
+                                                         }
+                                     },
+                      "typeVersion":  3.4
+                  },
+                  {
+                      "id":  "940ff4ab-345c-474c-9979-3b47f3abcbcb",
+                      "name":  "Calculate Patient Info",
+                      "type":  "n8n-nodes-base.code",
+                      "position":  [
+                                       -1040,
+                                       240
+                                   ],
+                      "parameters":  {
+                                         "jsCode":  "// Calculate patient age from date of birth\nconst items = $input.all();\nconst results = [];\n\nfor (const item of items) {\n  const dob = new Date(item.json.date_of_birth);\n  const today = new Date();\n  let age = today.getFullYear() - dob.getFullYear();\n  const monthDiff = today.getMonth() - dob.getMonth();\n  \n  if (monthDiff \u003c 0 || (monthDiff === 0 \u0026\u0026 today.getDate() \u003c dob.getDate())) {\n    age--;\n  }\n  \n  // Determine patient category\n  let patientCategory = \u0027adult\u0027;\n  if (age \u003c 2) patientCategory = \u0027infant\u0027;\n  else if (age \u003c 12) patientCategory = \u0027child\u0027;\n  else if (age \u003c 18) patientCategory = \u0027adolescent\u0027;\n  else if (age \u003e= 65) patientCategory = \u0027senior\u0027;\n  \n  results.push({\n    json: {\n      ...item.json,\n      patient_age: age,\n      patient_category: patientCategory\n    }\n  });\n}\n\nreturn results;"
+                                     },
+                      "typeVersion":  2
+                  },
+                  {
+                      "id":  "56257aaf-3cd0-4c28-bd10-ba68c746df93",
+                      "name":  "AI Medical Triage \u0026 Analysis",
+                      "type":  "@n8n/n8n-nodes-langchain.agent",
+                      "position":  [
+                                       -640,
+                                       240
+                                   ],
+                      "parameters":  {
+                                         "text":  "=You are an expert medical triage AI assistant helping healthcare providers prepare for patient appointments. Analyze this patient intake information and provide a comprehensive pre-appointment brief.\n\n## PATIENT INFORMATION\n\n**Name:** {{ $json.patient_name }}\n**Age:** {{ $json.patient_age }} years old ({{ $json.patient_category }})\n**DOB:** {{ $json.date_of_birth }}\n\n**Contact:**\n- Email: {{ $json.patient_email }}\n- Phone: {{ $json.patient_phone }}\n\n**Insurance:** {{ $json.insurance_provider }}\n\n---\n\n## CHIEF COMPLAINT \u0026 SYMPTOMS\n\n**Reason for Visit:** {{ $json.reason_for_visit }}\n\n**Symptoms:** {{ $json.symptoms }}\n\n**Duration:** {{ $json.symptom_duration }}\n\n**Pain Level:** {{ $json.pain_level }} (0-10 scale)\n\n---\n\n## MEDICAL BACKGROUND\n\n**Current Medications:** {{ $json.current_medications }}\n\n**Known Allergies:** {{ $json.allergies }}\n\n**Medical History:** {{ $json.medical_history }}\n\n---\n\n## YOUR TASK\n\nProvide a detailed medical analysis with the following structure:\n\n### 1. URGENCY ASSESSMENT\nClassify the urgency level based on symptoms:\n- **emergency**: Life-threatening (chest pain, severe bleeding, difficulty breathing, stroke symptoms, severe allergic reaction)\n- **urgent**: Needs same-day attention (high fever, severe pain, infection signs, injury)\n- **routine**: Can wait for regular appointment (chronic condition follow-up, preventive care)\n- **non_urgent**: Wellness visit, routine check-up, minor concerns\n\nProvide clear reasoning for the urgency classification.\n\n### 2. SYMPTOM ANALYSIS\n- Summarize primary and secondary symptoms\n- Identify any red flag symptoms requiring immediate attention\n- Note symptom patterns or progressions\n- Consider patient age and medical history context\n\n### 3. POSSIBLE CONDITIONS (Differential Diagnosis)\nList 3-5 possible conditions that could explain the symptoms, ordered by likelihood:\n1. Most likely condition with brief explanation\n2. Second possibility\n3. Third possibility\n(Continue as appropriate)\n\n**Important:** This is for provider preparation only, not a diagnosis.\n\n### 4. CRITICAL ALERTS\nFlag any of the following:\n- **Drug Interactions:** Between current medications and common treatments\n- **Allergy Concerns:** Medications/treatments to avoid\n- **Age Considerations:** Pediatric, geriatric, or pregnancy concerns\n- **Comorbidity Risks:** Existing conditions that complicate treatment\n- **Red Flags:** Symptoms suggesting serious underlying conditions\n\n### 5. RECOMMENDED PROVIDER TYPE\nWho should see this patient:\n- Primary Care Physician\n- Specialist (specify: cardiologist, dermatologist, etc.)\n- Urgent Care\n- Emergency Department\n- Telehealth appropriate\n\n### 6. PRE-APPOINTMENT PREPARATION\n\n**For Provider:**\n- Key questions to ask during visit\n- Examinations likely needed\n- Tests/labs to consider ordering\n- Reference materials to review\n\n**For Patient:**\n- What to bring (previous test results, medication list, etc.)\n- Pre-appointment instructions (fasting, medication holds, etc.)\n- What to expect during visit\n\n### 7. ESTIMATED APPOINTMENT DURATION\n- Quick visit (15 min)\n- Standard visit (30 min)\n- Extended visit (45-60 min)\n- Complex case (60+ min)\n\n### 8. APPOINTMENT PRIORITY SCORE\nRate 0-100 where:\n- 90-100: Emergency (immediate)\n- 70-89: Urgent (within 24-48 hours)\n- 40-69: Routine (within 1-2 weeks)\n- 0-39: Non-urgent (flexible scheduling)\n\nBe thorough, accurate, and prioritize patient safety. When in doubt, err on the side of caution with higher urgency levels.",
+                                         "options":  {
+
+                                                     },
+                                         "promptType":  "define",
+                                         "hasOutputParser":  true
+                                     },
+                      "typeVersion":  2.2
+                  },
+                  {
+                      "id":  "2af7aaa5-bf80-4bcc-9076-533ce01881e5",
+                      "name":  "OpenAI Chat Model",
+                      "type":  "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+                      "position":  [
+                                       -704,
+                                       496
+                                   ],
+                      "parameters":  {
+                                         "model":  {
+                                                       "__rl":  true,
+                                                       "mode":  "list",
+                                                       "value":  "gpt-4o"
+                                                   },
+                                         "options":  {
+                                                         "temperature":  0.3
+                                                     }
+                                     },
+                      "credentials":  {
+                                          "openAiApi":  {
+                                                            "id":  "credential-id",
+                                                            "name":  "openAiApi Credential"
+                                                        }
+                                      },
+                      "typeVersion":  1.2
+                  },
+                  {
+                      "id":  "a6542fce-7b17-4368-918c-e6068dd3cff6",
+                      "name":  "Structured Output Parser",
+                      "type":  "@n8n/n8n-nodes-langchain.outputParserStructured",
+                      "position":  [
+                                       -416,
+                                       496
+                                   ],
+                      "parameters":  {
+                                         "schemaType":  "manual",
+                                         "inputSchema":  "{\n  \"type\": \"object\",\n  \"required\": [\n    \"urgency_level\",\n    \"urgency_reasoning\",\n    \"priority_score\",\n    \"symptom_summary\",\n    \"red_flag_symptoms\",\n    \"possible_conditions\",\n    \"critical_alerts\",\n    \"recommended_provider\",\n    \"recommended_specialty\",\n    \"questions_for_provider\",\n    \"exams_needed\",\n    \"tests_to_consider\",\n    \"patient_instructions\",\n    \"items_to_bring\",\n    \"appointment_duration\",\n    \"detailed_analysis_markdown\"\n  ],\n  \"properties\": {\n    \"urgency_level\": {\n      \"type\": \"string\",\n      \"enum\": [\"emergency\", \"urgent\", \"routine\", \"non_urgent\"]\n    },\n    \"urgency_reasoning\": {\n      \"type\": \"string\",\n      \"description\": \"Why this urgency level was assigned\"\n    },\n    \"priority_score\": {\n      \"type\": \"integer\",\n      \"minimum\": 0,\n      \"maximum\": 100\n    },\n    \"symptom_summary\": {\n      \"type\": \"string\",\n      \"description\": \"Concise summary of key symptoms\"\n    },\n    \"red_flag_symptoms\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"},\n      \"description\": \"Critical symptoms requiring attention\"\n    },\n    \"possible_conditions\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"condition\": {\"type\": \"string\"},\n          \"likelihood\": {\"type\": \"string\"},\n          \"explanation\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"critical_alerts\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"},\n      \"description\": \"Drug interactions, allergies, age concerns\"\n    },\n    \"recommended_provider\": {\n      \"type\": \"string\",\n      \"description\": \"Type of provider needed\"\n    },\n    \"recommended_specialty\": {\n      \"type\": \"string\",\n      \"description\": \"If specialist needed, which one\"\n    },\n    \"questions_for_provider\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"}\n    },\n    \"exams_needed\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"}\n    },\n    \"tests_to_consider\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"}\n    },\n    \"patient_instructions\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"}\n    },\n    \"items_to_bring\": {\n      \"type\": \"array\",\n      \"items\": {\"type\": \"string\"}\n    },\n    \"appointment_duration\": {\n      \"type\": \"string\",\n      \"enum\": [\"15min\", \"30min\", \"45min\", \"60min\"]\n    },\n    \"detailed_analysis_markdown\": {\n      \"type\": \"string\",\n      \"description\": \"Full analysis in markdown format\"\n    }\n  }\n}"
+                                     },
+                      "typeVersion":  1.3
+                  },
+                  {
+                      "id":  "c7ab4cf1-f684-431a-93ad-687f878bbb57",
+                      "name":  "Is Emergency?",
+                      "type":  "n8n-nodes-base.if",
+                      "position":  [
+                                       -240,
+                                       240
+                                   ],
+                      "parameters":  {
+                                         "options":  {
+
+                                                     },
+                                         "conditions":  {
+                                                            "options":  {
+
+                                                                        },
+                                                            "conditions":  [
+                                                                               {
+                                                                                   "id":  "emergency-check",
+                                                                                   "operator":  {
+                                                                                                    "type":  "string",
+                                                                                                    "operation":  "equals"
+                                                                                                },
+                                                                                   "leftValue":  "={{ $json.output.urgency_level }}",
+                                                                                   "rightValue":  "emergency"
+                                                                               }
+                                                                           ]
+                                                        }
+                                     },
+                      "typeVersion":  2.2
+                  },
+                  {
+                      "id":  "89a54f87-502c-4a6d-b5f3-081af34374fe",
+                      "name":  "Is Urgent?",
+                      "type":  "n8n-nodes-base.if",
+                      "position":  [
+                                       -240,
+                                       480
+                                   ],
+                      "parameters":  {
+                                         "options":  {
+
+                                                     },
+                                         "conditions":  {
+                                                            "options":  {
+
+                                                                        },
+                                                            "conditions":  [
+                                                                               {
+                                                                                   "id":  "urgent-check",
+                                                                                   "operator":  {
+                                                                                                    "type":  "string",
+                                                                                                    "operation":  "equals"
+                                                                                                },
+                                                                                   "leftValue":  "={{ $json.output.urgency_level }}",
+                                                                                   "rightValue":  "urgent"
+                                                                               }
+                                                                           ]
+                                                        }
+                                     },
+                      "typeVersion":  2.2
+                  },
+                  {
+                      "id":  "2162d6bc-cd96-41f7-9902-fe98ff1cc8ae",
+                      "name":  "Alert Emergency Team (Slack)",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "position":  [
+                                       176,
+                                       -48
+                                   ],
+                      "parameters":  {
+                                         "url":  "https://slack.com/api/chat.postMessage",
+                                         "method":  "POST",
+                                         "options":  {
+
+                                                     },
+                                         "jsonBody":  "={\n  \"channel\": \"medical-emergencies\",\n  \"text\": \":rotating_light: *MEDICAL EMERGENCY ALERT* :rotating_light:\\n\\n*Patient:* {{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }} ({{ $(\u0027Calculate Patient Info\u0027).item.json.patient_age }}yo {{ $(\u0027Calculate Patient Info\u0027).item.json.patient_category }})\\n*Priority Score:* {{ $json.output.priority_score }}/100\\n*Urgency:* {{ $json.output.urgency_level.toUpperCase() }}\\n\\n*Chief Complaint:*\\n{{ $(\u0027Extract Patient Data\u0027).item.json.reason_for_visit }}\\n\\n*Symptoms:*\\n{{ $(\u0027Extract Patient Data\u0027).item.json.symptoms }}\\n\\n*Red Flags:*\\n{{ $json.output.red_flag_symptoms.map(flag =\u003e \u0027• \u0027 + flag).join(\u0027\\\\n\u0027) }}\\n\\n*Recommended Action:* {{ $json.output.urgency_reasoning }}\\n\\n:hospital: *IMMEDIATE ATTENTION REQUIRED* - Contact patient immediately at {{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\",\n  \"blocks\": [\n    {\n      \"type\": \"header\",\n      \"text\": {\n        \"type\": \"plain_text\",\n        \"text\": \":rotating_light: MEDICAL EMERGENCY\"\n      }\n    },\n    {\n      \"type\": \"section\",\n      \"fields\": [\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Patient:*\\\\n{{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Age:*\\\\n{{ $(\u0027Calculate Patient Info\u0027).item.json.patient_age }} years\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Priority:*\\\\n{{ $json.output.priority_score }}/100\"\n        },\n        {\n          \"type\": \"mrkdwn\",\n          \"text\": \"*Phone:*\\\\n{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\"\n        }\n      ]\n    },\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"*Symptoms:*\\\\n{{ $(\u0027Extract Patient Data\u0027).item.json.symptoms }}\"\n      }\n    },\n    {\n      \"type\": \"divider\"\n    },\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"*:warning: Red Flags:*\\\\n{{ $json.output.red_flag_symptoms.map((flag, i) =\u003e (i+1) + \u0027. \u0027 + flag).join(\u0027\\\\n\u0027) }}\"\n      }\n    }\n  ]\n}",
+                                         "sendBody":  true,
+                                         "specifyBody":  "json",
+                                         "authentication":  "genericCredentialType",
+                                         "genericAuthType":  "httpHeaderAuth"
+                                     },
+                      "typeVersion":  4.2
+                  },
+                  {
+                      "id":  "40c8f7d4-91f7-4aa9-ba78-52912fafa0ce",
+                      "name":  "Send Emergency Instructions",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       368,
+                                       -48
+                                   ],
+                      "webhookId":  "40e8a783-163e-4ae4-ba6b-249a965b1fb5",
+                      "parameters":  {
+                                         "sendTo":  "={{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}",
+                                         "message":  "=\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cstyle\u003e\nbody{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px}\n.alert-banner{background:#dc3545;color:#fff;padding:25px;text-align:center;border-radius:8px 8px 0 0}\n.alert-banner h1{margin:0;font-size:28px}\n.content{background:#fff;padding:30px;border:3px solid #dc3545}\n.urgent-box{background:#fff3cd;border:3px solid #ffc107;padding:20px;border-radius:8px;margin:20px 0;text-align:center}\n.urgent-box h2{margin:0 0 10px 0;color:#856404}\n.contact-box{background:#f8d7da;border:2px solid #dc3545;padding:15px;border-radius:5px;margin:20px 0}\nul{margin:10px 0;padding-left:20px}\nli{margin:5px 0}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\u003cdiv class=\"alert-banner\"\u003e\n\u003ch1\u003e🚨 IMMEDIATE ATTENTION REQUIRED\u003c/h1\u003e\n\u003c/div\u003e\n\u003cdiv class=\"content\"\u003e\n\u003cp\u003e\u003cstrong\u003eDear {{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }},\u003c/strong\u003e\u003c/p\u003e\n\n\u003cp\u003eBased on the symptoms you reported in your intake form, our medical AI system has flagged your case as requiring \u003cstrong\u003eimmediate medical attention\u003c/strong\u003e.\u003c/p\u003e\n\n\u003cdiv class=\"urgent-box\"\u003e\n\u003ch2\u003e⚠️ PLEASE TAKE ACTION NOW\u003c/h2\u003e\n\u003cp style=\"font-size:18px;margin:0\"\u003e\u003cstrong\u003eCall 911 immediately\u003c/strong\u003e or go to the nearest Emergency Department\u003c/p\u003e\n\u003c/div\u003e\n\n\u003cdiv class=\"contact-box\"\u003e\n\u003cp style=\"margin:0\"\u003e\u003cstrong\u003e📞 Our medical team will call you within 15 minutes at:\u003c/strong\u003e\u003cbr\u003e\n\u003cspan style=\"font-size:20px;color:#dc3545\"\u003e\u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e\u003c/span\u003e\u003c/p\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eWhy This Is Urgent:\u003c/h3\u003e\n\u003cp\u003e{{ $json.output.urgency_reasoning }}\u003c/p\u003e\n\n\u003ch3\u003e⚠️ Warning Signs Detected:\u003c/h3\u003e\n\u003cul\u003e\n{{ $json.output.red_flag_symptoms.map(flag =\u003e \u0027\u003cli\u003e\u003cstrong\u003e\u0027 + flag + \u0027\u003c/strong\u003e\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch3\u003eWhat To Do Right Now:\u003c/h3\u003e\n\u003col\u003e\n\u003cli\u003e\u003cstrong\u003eCall 911 or go to ER immediately\u003c/strong\u003e if experiencing severe symptoms\u003c/li\u003e\n\u003cli\u003eHave someone stay with you\u003c/li\u003e\n\u003cli\u003eBring your medications and medical records\u003c/li\u003e\n\u003cli\u003eDo NOT drive yourself if symptoms are severe\u003c/li\u003e\n\u003c/ol\u003e\n\n\u003cp style=\"margin-top:30px;padding-top:20px;border-top:2px solid #dc3545\"\u003e\u003cstrong\u003eEmergency Contact Numbers:\u003c/strong\u003e\u003cbr\u003e\n📞 Emergency: \u003cstrong\u003e911\u003c/strong\u003e\u003cbr\u003e\n📞 Our Clinic: \u003cstrong\u003e(555) 123-4567\u003c/strong\u003e\u003cbr\u003e\n📞 After Hours: \u003cstrong\u003e(555) 123-4568\u003c/strong\u003e\u003c/p\u003e\n\n\u003cp style=\"font-size:12px;color:#666;margin-top:20px\"\u003eIntake ID: {{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}\u003c/p\u003e\n\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=🚨 URGENT: Immediate Medical Attention Needed"
+                                     },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "b9c68bc5-0934-48ab-b7d7-e4d67b74c596",
+                      "name":  "Alert On-Call Doctor",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       576,
+                                       -48
+                                   ],
+                      "webhookId":  "39eda42b-0a2a-4c52-89d8-f4c447eb7fbb",
+                      "parameters":  {
+                                         "sendTo":  "user@example.com",
+                                         "message":  "=\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cstyle\u003e\nbody{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:800px;margin:0 auto;padding:20px}\n.header{background:#dc3545;color:#fff;padding:20px;text-align:center;border-radius:8px 8px 0 0}\n.content{background:#fff;padding:30px;border:2px solid #dc3545}\n.patient-info{background:#f8f9fa;padding:20px;border-radius:5px;margin:20px 0}\n.vital-info{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0}\n.info-box{background:#fff3cd;padding:15px;border-left:4px solid #ffc107}\n.red-flags{background:#f8d7da;padding:20px;border-left:4px solid #dc3545;margin:20px 0}\n.analysis{background:#e7f3ff;padding:20px;border-radius:5px;margin:20px 0}\ntable{width:100%;border-collapse:collapse;margin:15px 0}\ntable th{background:#dc3545;color:#fff;padding:12px;text-align:left}\ntable td{padding:12px;border-bottom:1px solid #ddd}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\u003cdiv class=\"header\"\u003e\n\u003ch1 style=\"margin:0\"\u003e🚨 EMERGENCY PATIENT ALERT\u003c/h1\u003e\n\u003cp style=\"margin:5px 0 0 0;font-size:18px\"\u003eImmediate physician review required\u003c/p\u003e\n\u003c/div\u003e\n\u003cdiv class=\"content\"\u003e\n\n\u003cdiv class=\"patient-info\"\u003e\n\u003ch2 style=\"margin-top:0;color:#dc3545\"\u003ePatient Information\u003c/h2\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003ctd\u003e\u003cstrong\u003eName:\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e\u003cstrong\u003eAge:\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Calculate Patient Info\u0027).item.json.patient_age }} years ({{ $(\u0027Calculate Patient Info\u0027).item.json.patient_category }})\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e\u003cstrong\u003eDOB:\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.date_of_birth }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e\u003cstrong\u003ePhone:\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e\u003cstrong style=\"font-size:18px;color:#dc3545\"\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e\u003cstrong\u003eEmail:\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e\u003cstrong\u003eInsurance:\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.insurance_provider }}\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\u003c/div\u003e\n\n\u003cdiv class=\"vital-info\"\u003e\n\u003cdiv class=\"info-box\"\u003e\n\u003cstrong\u003ePriority Score:\u003c/strong\u003e\u003cbr\u003e\n\u003cspan style=\"font-size:32px;color:#dc3545\"\u003e{{ $json.output.priority_score }}/100\u003c/span\u003e\n\u003c/div\u003e\n\u003cdiv class=\"info-box\"\u003e\n\u003cstrong\u003eUrgency Level:\u003c/strong\u003e\u003cbr\u003e\n\u003cspan style=\"font-size:24px;color:#dc3545\"\u003e{{ $json.output.urgency_level.toUpperCase() }}\u003c/span\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eChief Complaint\u003c/h3\u003e\n\u003cp style=\"font-size:16px\"\u003e\u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.reason_for_visit }}\u003c/strong\u003e\u003c/p\u003e\n\n\u003ch3\u003eSymptoms Reported\u003c/h3\u003e\n\u003cp\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.symptoms }}\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eDuration:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.symptom_duration }}\u003cbr\u003e\n\u003cstrong\u003ePain Level:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.pain_level }}/10\u003c/p\u003e\n\n\u003cdiv class=\"red-flags\"\u003e\n\u003ch3 style=\"margin-top:0;color:#dc3545\"\u003e🚨 RED FLAG SYMPTOMS\u003c/h3\u003e\n\u003cul style=\"margin:0;padding-left:20px\"\u003e\n{{ $json.output.red_flag_symptoms.map(flag =\u003e \u0027\u003cli style=\"margin:8px 0;font-size:16px\"\u003e\u003cstrong\u003e\u0027 + flag + \u0027\u003c/strong\u003e\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\u003c/div\u003e\n\n\u003ch3\u003e⚠️ Critical Alerts\u003c/h3\u003e\n\u003cul\u003e\n{{ $json.output.critical_alerts.map(alert =\u003e \u0027\u003cli\u003e\u003cstrong\u003e\u0027 + alert + \u0027\u003c/strong\u003e\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch3\u003eMedical Background\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003eCurrent Medications:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.current_medications }}\u003cbr\u003e\n\u003cstrong\u003eKnown Allergies:\u003c/strong\u003e \u003cspan style=\"color:#dc3545;font-weight:bold\"\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.allergies }}\u003c/span\u003e\u003cbr\u003e\n\u003cstrong\u003eMedical History:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.medical_history }}\u003c/p\u003e\n\n\u003cdiv class=\"analysis\"\u003e\n\u003ch3 style=\"margin-top:0\"\u003eAI Analysis \u0026 Recommendations\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003eUrgency Reasoning:\u003c/strong\u003e {{ $json.output.urgency_reasoning }}\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eSymptom Summary:\u003c/strong\u003e {{ $json.output.symptom_summary }}\u003c/p\u003e\n\n\u003ch4\u003ePossible Conditions to Consider:\u003c/h4\u003e\n\u003col\u003e\n{{ $json.output.possible_conditions.map(cond =\u003e \u0027\u003cli\u003e\u003cstrong\u003e\u0027 + cond.condition + \u0027\u003c/strong\u003e (\u0027 + cond.likelihood + \u0027)\u003cbr\u003e\u003cem\u003e\u0027 + cond.explanation + \u0027\u003c/em\u003e\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ol\u003e\n\n\u003ch4\u003eRecommended Provider:\u003c/h4\u003e\n\u003cp\u003e\u003cstrong\u003e{{ $json.output.recommended_provider }}\u003c/strong\u003e\n{{ $json.output.recommended_specialty ? \u0027 - Specialty: \u0027 + $json.output.recommended_specialty : \u0027\u0027 }}\u003c/p\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eAction Items for Provider\u003c/h3\u003e\n\u003ch4\u003eKey Questions to Ask:\u003c/h4\u003e\n\u003cul\u003e\n{{ $json.output.questions_for_provider.map(q =\u003e \u0027\u003cli\u003e\u0027 + q + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch4\u003eExaminations Needed:\u003c/h4\u003e\n\u003cul\u003e\n{{ $json.output.exams_needed.map(exam =\u003e \u0027\u003cli\u003e\u0027 + exam + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch4\u003eTests to Consider:\u003c/h4\u003e\n\u003cul\u003e\n{{ $json.output.tests_to_consider.map(test =\u003e \u0027\u003cli\u003e\u0027 + test + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch4\u003eEstimated Appointment Duration:\u003c/h4\u003e\n\u003cp\u003e\u003cstrong\u003e{{ $json.output.appointment_duration }}\u003c/strong\u003e\u003c/p\u003e\n\n\u003cdiv style=\"margin-top:30px;padding:20px;background:#dc3545;color:#fff;border-radius:5px;text-align:center\"\u003e\n\u003ch3 style=\"margin:0 0 10px 0\"\u003e⚡ IMMEDIATE ACTION REQUIRED\u003c/h3\u003e\n\u003cp style=\"margin:0;font-size:18px\"\u003ePlease contact patient immediately at:\u003cbr\u003e\n\u003cstrong style=\"font-size:24px\"\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e\u003c/p\u003e\n\u003c/div\u003e\n\n\u003cp style=\"margin-top:20px;padding-top:20px;border-top:1px solid #ddd;font-size:12px;color:#666\"\u003e\n\u003cstrong\u003eIntake ID:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}\u003cbr\u003e\n\u003cstrong\u003eSubmitted:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.submission_date }}\u003cbr\u003e\n\u003cstrong\u003eAI Analysis Date:\u003c/strong\u003e {{ new Date().toISOString() }}\n\u003c/p\u003e\n\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=🚨 EMERGENCY PATIENT - Immediate Review Required"
+                                     },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "6aff2270-85cf-418c-affc-e3d259e0a959",
+                      "name":  "Notify Front Desk (Urgent)",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       224,
+                                       352
+                                   ],
+                      "webhookId":  "e95174c5-19a5-4b4b-94e7-12285b29a24f",
+                      "parameters":  {
+                                         "sendTo":  "user@example.com",
+                                         "message":  "=\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cstyle\u003e\nbody{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:700px;margin:0 auto;padding:20px}\n.header{background:#ff9800;color:#fff;padding:20px;text-align:center;border-radius:8px 8px 0 0}\n.content{background:#fff;padding:30px;border:2px solid #ff9800}\n.patient-card{background:#fff3cd;padding:20px;border-radius:5px;border-left:4px solid #ff9800;margin:20px 0}\n.priority-box{background:#ffc107;color:#000;padding:15px;text-align:center;border-radius:5px;margin:20px 0}\ntable{width:100%;border-collapse:collapse;margin:15px 0}\ntable td{padding:10px;border-bottom:1px solid #ddd}\ntable td:first-child{font-weight:bold;width:40%}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\u003cdiv class=\"header\"\u003e\n\u003ch2 style=\"margin:0\"\u003e⚡ Urgent Scheduling Request\u003c/h2\u003e\n\u003c/div\u003e\n\u003cdiv class=\"content\"\u003e\n\u003cp\u003e\u003cstrong\u003ePlease schedule this patient for same-day or next-day appointment.\u003c/strong\u003e\u003c/p\u003e\n\n\u003cdiv class=\"priority-box\"\u003e\n\u003ch3 style=\"margin:0 0 10px 0\"\u003ePriority Score: {{ $json.output.priority_score }}/100\u003c/h3\u003e\n\u003cp style=\"margin:0;font-size:16px\"\u003eUrgency Level: \u003cstrong\u003e{{ $json.output.urgency_level.toUpperCase() }}\u003c/strong\u003e\u003c/p\u003e\n\u003c/div\u003e\n\n\u003cdiv class=\"patient-card\"\u003e\n\u003ch3 style=\"margin-top:0\"\u003ePatient Information\u003c/h3\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003ctd\u003eName:\u003c/td\u003e\u003ctd\u003e\u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}\u003c/strong\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eAge:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Calculate Patient Info\u0027).item.json.patient_age }} years\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePhone:\u003c/td\u003e\u003ctd\u003e\u003cstrong style=\"font-size:16px\"\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eEmail:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eInsurance:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.insurance_provider }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePreferred Date:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.preferred_date }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePreferred Time:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.preferred_time }}\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eChief Complaint\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.reason_for_visit }}\u003c/strong\u003e\u003c/p\u003e\n\n\u003ch3\u003eSymptoms\u003c/h3\u003e\n\u003cp\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.symptoms }}\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eDuration:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.symptom_duration }}\u003c/p\u003e\n\n\u003ch3\u003eProvider Recommendation\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003e{{ $json.output.recommended_provider }}\u003c/strong\u003e\n{{ $json.output.recommended_specialty ? \u0027\u003cbr\u003eSpecialty: \u0027 + $json.output.recommended_specialty : \u0027\u0027 }}\u003c/p\u003e\n\n\u003ch3\u003eAppointment Duration\u003c/h3\u003e\n\u003cp\u003eBook \u003cstrong\u003e{{ $json.output.appointment_duration }}\u003c/strong\u003e appointment slot\u003c/p\u003e\n\n\u003ch3\u003eAction Required\u003c/h3\u003e\n\u003col\u003e\n\u003cli\u003eContact patient at \u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e\u003c/li\u003e\n\u003cli\u003eSchedule within 24-48 hours\u003c/li\u003e\n\u003cli\u003eConfirm insurance eligibility\u003c/li\u003e\n\u003cli\u003eSend pre-appointment instructions\u003c/li\u003e\n\u003c/ol\u003e\n\n\u003cp style=\"margin-top:30px;padding:20px;background:#fff3cd;border-radius:5px\"\u003e\n\u003cstrong\u003e📋 Note:\u003c/strong\u003e Patient intake form completed. Provider prep brief will be sent separately.\n\u003c/p\u003e\n\n\u003cp style=\"margin-top:20px;padding-top:20px;border-top:1px solid #ddd;font-size:12px;color:#666\"\u003e\nIntake ID: {{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}\n\u003c/p\u003e\n\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=⚡ Urgent Patient - Schedule ASAP - {{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}"
+                                     },
+                      "credentials":  {
+                                          "gmailOAuth2":  {
+                                                              "id":  "credential-id",
+                                                              "name":  "gmailOAuth2 Credential"
+                                                          }
+                                      },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "ca4a10ac-6a8f-4b47-9d2d-aa6a4308697e",
+                      "name":  "Send Patient Confirmation (Urgent)",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       464,
+                                       352
+                                   ],
+                      "webhookId":  "c140b4a5-bcb5-4000-aea4-7fff6f8f412a",
+                      "parameters":  {
+                                         "sendTo":  "={{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}",
+                                         "message":  "=\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cstyle\u003e\nbody{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px}\n.header{background:#ff9800;color:#fff;padding:20px;text-align:center;border-radius:8px 8px 0 0}\n.content{background:#fff;padding:30px;border:1px solid #ddd}\n.info-box{background:#fff3cd;padding:15px;border-radius:5px;margin:20px 0}\nul{margin:10px 0;padding-left:20px}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\u003cdiv class=\"header\"\u003e\n\u003ch2 style=\"margin:0\"\u003eWe\u0027ve Received Your Information\u003c/h2\u003e\n\u003c/div\u003e\n\u003cdiv class=\"content\"\u003e\n\u003cp\u003eDear {{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }},\u003c/p\u003e\n\n\u003cp\u003eThank you for completing your medical intake form. Based on your symptoms, we\u0027d like to see you soon.\u003c/p\u003e\n\n\u003cdiv class=\"info-box\"\u003e\n\u003cp style=\"margin:0\"\u003e\u003cstrong\u003e⚡ Priority Status: Urgent\u003c/strong\u003e\u003c/p\u003e\n\u003cp style=\"margin:5px 0 0 0\"\u003eOur scheduling team will contact you within the next few hours to arrange an appointment in the next 24-48 hours.\u003c/p\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eWhat to Expect\u003c/h3\u003e\n\u003cp\u003eOur team has reviewed your intake information and has prepared for your visit. You\u0027ll receive a call from our front desk at \u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e to schedule your appointment.\u003c/p\u003e\n\n\u003ch3\u003eWhat to Bring\u003c/h3\u003e\n\u003cul\u003e\n{{ $json.output.items_to_bring.map(item =\u003e \u0027\u003cli\u003e\u0027 + item + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch3\u003ePre-Appointment Instructions\u003c/h3\u003e\n\u003cul\u003e\n{{ $json.output.patient_instructions.map(instruction =\u003e \u0027\u003cli\u003e\u0027 + instruction + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch3\u003eIf Your Symptoms Worsen\u003c/h3\u003e\n\u003cp\u003eIf you experience any of the following before your appointment:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eSevere or worsening symptoms\u003c/li\u003e\n\u003cli\u003eDifficulty breathing\u003c/li\u003e\n\u003cli\u003eChest pain\u003c/li\u003e\n\u003cli\u003eSevere bleeding\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cstrong\u003eCall 911 or go to the nearest Emergency Department immediately.\u003c/strong\u003e\u003c/p\u003e\n\n\u003ch3\u003eContact Us\u003c/h3\u003e\n\u003cp\u003e📞 Office: (555) 123-4567\u003cbr\u003e\n📞 After Hours: (555) 123-4568\u003cbr\u003e\n📧 Email: appointments@clinic.com\u003c/p\u003e\n\n\u003cp\u003eWe look forward to seeing you soon.\u003c/p\u003e\n\n\u003cp\u003eBest regards,\u003cbr\u003e\n\u003cstrong\u003eYour Healthcare Team\u003c/strong\u003e\u003c/p\u003e\n\n\u003cp style=\"margin-top:30px;padding-top:20px;border-top:1px solid #ddd;font-size:12px;color:#666\"\u003e\nIntake ID: {{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}\n\u003c/p\u003e\n\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=Your Medical Appointment - Next Steps"
+                                     },
+                      "credentials":  {
+                                          "gmailOAuth2":  {
+                                                              "id":  "credential-id",
+                                                              "name":  "gmailOAuth2 Credential"
+                                                          }
+                                      },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "d3bc5913-96a0-4cc6-8c16-9778fadded37",
+                      "name":  "Notify Scheduler (Routine)",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       208,
+                                       816
+                                   ],
+                      "webhookId":  "38ccc168-6d4a-4a1e-8877-304fe48c26cd",
+                      "parameters":  {
+                                         "sendTo":  "user@example.com",
+                                         "message":  "=\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cstyle\u003e\nbody{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:700px;margin:0 auto;padding:20px}\n.header{background:#667eea;color:#fff;padding:20px;text-align:center;border-radius:8px 8px 0 0}\n.content{background:#fff;padding:30px;border:1px solid #ddd}\n.patient-card{background:#f8f9fa;padding:20px;border-radius:5px;margin:20px 0}\ntable{width:100%;border-collapse:collapse}\ntable td{padding:10px;border-bottom:1px solid #ddd}\ntable td:first-child{font-weight:bold;width:35%}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\u003cdiv class=\"header\"\u003e\n\u003ch2 style=\"margin:0\"\u003e📋 New Appointment Request\u003c/h2\u003e\n\u003c/div\u003e\n\u003cdiv class=\"content\"\u003e\n\u003cp\u003eA new patient has completed their intake form. Please schedule an appointment.\u003c/p\u003e\n\n\u003cdiv class=\"patient-card\"\u003e\n\u003ch3 style=\"margin-top:0\"\u003ePatient Details\u003c/h3\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003ctd\u003eName:\u003c/td\u003e\u003ctd\u003e\u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}\u003c/strong\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eAge:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Calculate Patient Info\u0027).item.json.patient_age }} years ({{ $(\u0027Calculate Patient Info\u0027).item.json.patient_category }})\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePhone:\u003c/td\u003e\u003ctd\u003e\u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eEmail:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eInsurance:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.insurance_provider }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePreferred Date:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.preferred_date }}\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePreferred Time:\u003c/td\u003e\u003ctd\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.preferred_time }}\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eAppointment Details\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003eVisit Type:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.reason_for_visit }}\u003cbr\u003e\n\u003cstrong\u003eRecommended Provider:\u003c/strong\u003e {{ $json.output.recommended_provider }}\u003cbr\u003e\n\u003cstrong\u003eDuration:\u003c/strong\u003e {{ $json.output.appointment_duration }}\u003cbr\u003e\n\u003cstrong\u003ePriority:\u003c/strong\u003e {{ $json.output.urgency_level }}\u003c/p\u003e\n\n\u003ch3\u003eScheduling Instructions\u003c/h3\u003e\n\u003cp\u003eSchedule within 1-2 weeks at patient\u0027s preferred time.\u003c/p\u003e\n\n\u003cp style=\"margin-top:30px;padding-top:20px;border-top:1px solid #ddd;font-size:12px;color:#666\"\u003e\nIntake ID: {{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}\n\u003c/p\u003e\n\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=New Appointment Request - {{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}"
+                                     },
+                      "credentials":  {
+                                          "gmailOAuth2":  {
+                                                              "id":  "credential-id",
+                                                              "name":  "gmailOAuth2 Credential"
+                                                          }
+                                      },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "807c0df0-e1fc-4374-bc07-b506d2dda06e",
+                      "name":  "Send Patient Confirmation (Routine)",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       576,
+                                       816
+                                   ],
+                      "webhookId":  "06cafaa5-7568-4e3c-a038-7fe5e6290a8e",
+                      "parameters":  {
+                                         "sendTo":  "={{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}",
+                                         "message":  "=\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n\u003cstyle\u003e\nbody{font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;padding:20px}\n.header{background:#667eea;color:#fff;padding:20px;text-align:center;border-radius:8px 8px 0 0}\n.content{background:#fff;padding:30px;border:1px solid #ddd}\n.info-box{background:#e7f3ff;padding:15px;border-radius:5px;margin:20px 0}\n\u003c/style\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\u003cdiv class=\"header\"\u003e\n\u003ch2 style=\"margin:0\"\u003eThank You for Your Submission\u003c/h2\u003e\n\u003c/div\u003e\n\u003cdiv class=\"content\"\u003e\n\u003cp\u003eDear {{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }},\u003c/p\u003e\n\n\u003cp\u003eThank you for completing your medical intake form. We\u0027ve received your information and will be in touch shortly to schedule your appointment.\u003c/p\u003e\n\n\u003cdiv class=\"info-box\"\u003e\n\u003cp style=\"margin:0\"\u003e\u003cstrong\u003e📅 Next Steps\u003c/strong\u003e\u003c/p\u003e\n\u003cp style=\"margin:5px 0 0 0\"\u003eOur scheduling team will contact you within 1-2 business days at \u003cstrong\u003e{{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}\u003c/strong\u003e to arrange an appointment that works with your schedule.\u003c/p\u003e\n\u003c/div\u003e\n\n\u003ch3\u003eYour Preferred Appointment Time\u003c/h3\u003e\n\u003cp\u003e\u003cstrong\u003eDate:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.preferred_date }}\u003cbr\u003e\n\u003cstrong\u003eTime:\u003c/strong\u003e {{ $(\u0027Extract Patient Data\u0027).item.json.preferred_time }}\u003c/p\u003e\n\n\u003cp\u003eWe\u0027ll do our best to accommodate your preferences.\u003c/p\u003e\n\n\u003ch3\u003eWhat to Bring\u003c/h3\u003e\n\u003cul\u003e\n{{ $json.output.items_to_bring.map(item =\u003e \u0027\u003cli\u003e\u0027 + item + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch3\u003eBefore Your Appointment\u003c/h3\u003e\n\u003cul\u003e\n{{ $json.output.patient_instructions.map(instruction =\u003e \u0027\u003cli\u003e\u0027 + instruction + \u0027\u003c/li\u003e\u0027).join(\u0027\u0027) }}\n\u003c/ul\u003e\n\n\u003ch3\u003eQuestions?\u003c/h3\u003e\n\u003cp\u003eIf you have any questions or if your symptoms change, please don\u0027t hesitate to contact us:\u003c/p\u003e\n\u003cp\u003e📞 Office: (555) 123-4567\u003cbr\u003e\n📧 Email: appointments@clinic.com\u003c/p\u003e\n\n\u003cp\u003eWe look forward to caring for you.\u003c/p\u003e\n\n\u003cp\u003eWarm regards,\u003cbr\u003e\n\u003cstrong\u003eYour Healthcare Team\u003c/strong\u003e\u003c/p\u003e\n\n\u003cp style=\"margin-top:30px;padding-top:20px;border-top:1px solid #ddd;font-size:12px;color:#666\"\u003e\nIntake ID: {{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}\n\u003c/p\u003e\n\u003c/div\u003e\n\u003c/body\u003e\n\u003c/html\u003e",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=Thank You - We\u0027ll Schedule Your Appointment Soon"
+                                     },
+                      "credentials":  {
+                                          "gmailOAuth2":  {
+                                                              "id":  "credential-id",
+                                                              "name":  "gmailOAuth2 Credential"
+                                                          }
+                                      },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "c54705c2-087d-4719-8fa4-9f39cafae5db",
+                      "name":  "Log to Patient Database",
+                      "type":  "n8n-nodes-base.googleSheets",
+                      "position":  [
+                                       1120,
+                                       272
+                                   ],
+                      "parameters":  {
+                                         "columns":  {
+                                                         "value":  {
+                                                                       "status":  "={{ $json.status || \u0027Pending Scheduling\u0027 }}",
+                                                                       "symptoms":  "={{ $(\u0027Extract Patient Data\u0027).item.json.symptoms }}",
+                                                                       "allergies":  "={{ $(\u0027Extract Patient Data\u0027).item.json.allergies }}",
+                                                                       "insurance":  "={{ $(\u0027Extract Patient Data\u0027).item.json.insurance_provider }}",
+                                                                       "intake_id":  "={{ $(\u0027Extract Patient Data\u0027).item.json.intake_id }}",
+                                                                       "red_flags":  "={{ $json.output.red_flag_symptoms.join(\u0027; \u0027) }}",
+                                                                       "pain_level":  "={{ $(\u0027Extract Patient Data\u0027).item.json.pain_level }}",
+                                                                       "medications":  "={{ $(\u0027Extract Patient Data\u0027).item.json.current_medications }}",
+                                                                       "patient_age":  "={{ $(\u0027Calculate Patient Info\u0027).item.json.patient_age }}",
+                                                                       "patient_name":  "={{ $(\u0027Extract Patient Data\u0027).item.json.patient_name }}",
+                                                                       "patient_email":  "={{ $(\u0027Extract Patient Data\u0027).item.json.patient_email }}",
+                                                                       "patient_phone":  "={{ $(\u0027Extract Patient Data\u0027).item.json.patient_phone }}",
+                                                                       "urgency_level":  "={{ $json.output.urgency_level }}",
+                                                                       "priority_score":  "={{ $json.output.priority_score }}",
+                                                                       "submission_date":  "={{ $(\u0027Extract Patient Data\u0027).item.json.submission_date }}",
+                                                                       "patient_category":  "={{ $(\u0027Calculate Patient Info\u0027).item.json.patient_category }}",
+                                                                       "reason_for_visit":  "={{ $(\u0027Extract Patient Data\u0027).item.json.reason_for_visit }}",
+                                                                       "symptom_duration":  "={{ $(\u0027Extract Patient Data\u0027).item.json.symptom_duration }}",
+                                                                       "appointment_duration":  "={{ $json.output.appointment_duration }}",
+                                                                       "recommended_provider":  "={{ $json.output.recommended_provider }}"
+                                                                   },
+                                                         "mappingMode":  "defineBelow"
+                                                     },
+                                         "options":  {
+
+                                                     },
+                                         "operation":  "append",
+                                         "sheetName":  {
+                                                           "__rl":  true,
+                                                           "mode":  "list",
+                                                           "value":  "gid=0"
+                                                       },
+                                         "documentId":  {
+                                                            "__rl":  true,
+                                                            "mode":  "list",
+                                                            "value":  "YOUR_GOOGLE_SHEET_ID"
+                                                        }
+                                     },
+                      "typeVersion":  4.5
+                  },
+                  {
+                      "id":  "caee6ac1-430e-4209-b1fa-a5eb45cc9a0b",
+                      "name":  "Sticky Note - Intake",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -1584,
+                                       64
+                                   ],
+                      "parameters":  {
+                                         "color":  5,
+                                         "width":  756,
+                                         "height":  388,
+                                         "content":  "## 📋 Patient Intake Collection\n\nCaptures comprehensive patient information via **HIPAA-compliant Jotform**.\nCreate your form for free on [Jotform using this link](https://www.jotform.com/?partner=mediajade)\n\n**Output:** Structured patient data ready for AI triage"
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "c52626e9-4658-4759-9524-7790b07363b0",
+                      "name":  "Sticky Note - Triage",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -752,
+                                       64
+                                   ],
+                      "parameters":  {
+                                         "color":  4,
+                                         "width":  676,
+                                         "height":  604,
+                                         "content":  "## 🤖 AI Medical Triage \u0026 Analysis\n\nAdvanced medical AI analyzes symptoms and prepares comprehensive provider brief.\n\n**Result:** Complete appointment brief for provider + patient guidance"
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "703c5f39-f111-473d-b34c-ebb9b2e22b2e",
+                      "name":  "Sticky Note - Emergency",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       80,
+                                       -240
+                                   ],
+                      "parameters":  {
+                                         "color":  3,
+                                         "width":  744,
+                                         "height":  380,
+                                         "content":  "## 🚨 Emergency Response Protocol\n\n**When AI detects life-threatening symptoms:**\n\n**Priority:** Patient safety above all\n\n**Response Time:** \u003c15 minutes for doctor callback"
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "589e4311-b163-458a-8fa6-f0bfb97bfc9d",
+                      "name":  "Sticky Note - Urgent",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       64,
+                                       192
+                                   ],
+                      "parameters":  {
+                                         "color":  6,
+                                         "width":  760,
+                                         "height":  396,
+                                         "content":  "## ⚡ Urgent Scheduling Path\n\n**For high-priority cases needing 24-48 hour appointments:**\n\n**Goal:** Fast scheduling without alarming patient unnecessarily"
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "d39e7c5f-5f95-41d2-8d11-2232e93ee42f",
+                      "name":  "Sticky Note - Routine",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       64,
+                                       640
+                                   ],
+                      "parameters":  {
+                                         "color":  7,
+                                         "width":  776,
+                                         "height":  412,
+                                         "content":  "## 📅 Routine Scheduling Path\n\n**For standard appointments within 1-2 weeks:**\n\n**Goal:** Smooth scheduling experience with all necessary information provided upfront"
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "cb14c6a8-765c-42d6-8bda-77c93eabba8e",
+                      "name":  "Sticky Note - Database",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       1008,
+                                       96
+                                   ],
+                      "parameters":  {
+                                         "color":  2,
+                                         "width":  440,
+                                         "height":  380,
+                                         "content":  "## 📊 Patient Data Management\n\nComprehensive logging for analytics, compliance, and continuity of care.\n\n**Result:** Complete patient journey visibility"
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "76a3a76f-d389-4355-8214-22c4a4175c6e",
+                      "name":  "Jotform Trigger",
+                      "type":  "n8n-nodes-base.jotFormTrigger",
+                      "position":  [
+                                       -1520,
+                                       240
+                                   ],
+                      "webhookId":  "06e9eacf-f9fc-46e1-9564-37d2de14ae21",
+                      "parameters":  {
+                                         "form":  "252815075257460"
+                                     },
+                      "credentials":  {
+                                          "jotFormApi":  {
+                                                             "id":  "credential-id",
+                                                             "name":  "jotFormApi Credential"
+                                                         }
+                                      },
+                      "typeVersion":  1
+                  }
+              ],
+    "active":  false,
+    "pinData":  {
+
+                },
+    "settings":  {
+                     "executionOrder":  "v1"
+                 },
+    "versionId":  "e6a0c4d8-9c02-4cf6-90da-e6d350b18cbc",
+    "connections":  {
+                        "Is Urgent?":  {
+                                           "main":  [
+                                                        [
+                                                            {
+                                                                "node":  "Notify Front Desk (Urgent)",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ],
+                                                        [
+                                                            {
+                                                                "node":  "Notify Scheduler (Routine)",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ]
+                                                    ]
+                                       },
+                        "Is Emergency?":  {
+                                              "main":  [
+                                                           [
+                                                               {
+                                                                   "node":  "Alert Emergency Team (Slack)",
+                                                                   "type":  "main",
+                                                                   "index":  0
+                                                               }
+                                                           ]
+                                                       ]
+                                          },
+                        "Jotform Trigger":  {
+                                                "main":  [
+                                                             [
+                                                                 {
+                                                                     "node":  "Extract Patient Data",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 }
+                                                             ]
+                                                         ]
+                                            },
+                        "OpenAI Chat Model":  {
+                                                  "ai_languageModel":  [
+                                                                           [
+                                                                               {
+                                                                                   "node":  "AI Medical Triage \u0026 Analysis",
+                                                                                   "type":  "ai_languageModel",
+                                                                                   "index":  0
+                                                                               }
+                                                                           ]
+                                                                       ]
+                                              },
+                        "Alert On-Call Doctor":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Log to Patient Database",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Extract Patient Data":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Calculate Patient Info",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Calculate Patient Info":  {
+                                                       "main":  [
+                                                                    [
+                                                                        {
+                                                                            "node":  "AI Medical Triage \u0026 Analysis",
+                                                                            "type":  "main",
+                                                                            "index":  0
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                   },
+                        "Structured Output Parser":  {
+                                                         "ai_outputParser":  [
+                                                                                 [
+                                                                                     {
+                                                                                         "node":  "AI Medical Triage \u0026 Analysis",
+                                                                                         "type":  "ai_outputParser",
+                                                                                         "index":  0
+                                                                                     }
+                                                                                 ]
+                                                                             ]
+                                                     },
+                        "Notify Front Desk (Urgent)":  {
+                                                           "main":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "Send Patient Confirmation (Urgent)",
+                                                                                "type":  "main",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                                       },
+                        "Notify Scheduler (Routine)":  {
+                                                           "main":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "Send Patient Confirmation (Routine)",
+                                                                                "type":  "main",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                                       },
+                        "Send Emergency Instructions":  {
+                                                            "main":  [
+                                                                         [
+                                                                             {
+                                                                                 "node":  "Alert On-Call Doctor",
+                                                                                 "type":  "main",
+                                                                                 "index":  0
+                                                                             }
+                                                                         ]
+                                                                     ]
+                                                        },
+                        "AI Medical Triage \u0026 Analysis":  {
+                                                                  "main":  [
+                                                                               [
+                                                                                   {
+                                                                                       "node":  "Is Emergency?",
+                                                                                       "type":  "main",
+                                                                                       "index":  0
+                                                                                   },
+                                                                                   {
+                                                                                       "node":  "Is Urgent?",
+                                                                                       "type":  "main",
+                                                                                       "index":  0
+                                                                                   }
+                                                                               ]
+                                                                           ]
+                                                              },
+                        "Alert Emergency Team (Slack)":  {
+                                                             "main":  [
+                                                                          [
+                                                                              {
+                                                                                  "node":  "Send Emergency Instructions",
+                                                                                  "type":  "main",
+                                                                                  "index":  0
+                                                                              }
+                                                                          ]
+                                                                      ]
+                                                         },
+                        "Send Patient Confirmation (Urgent)":  {
+                                                                   "main":  [
+                                                                                [
+                                                                                    {
+                                                                                        "node":  "Log to Patient Database",
+                                                                                        "type":  "main",
+                                                                                        "index":  0
+                                                                                    }
+                                                                                ]
+                                                                            ]
+                                                               },
+                        "Send Patient Confirmation (Routine)":  {
+                                                                    "main":  [
+                                                                                 [
+                                                                                     {
+                                                                                         "node":  "Log to Patient Database",
+                                                                                         "type":  "main",
+                                                                                         "index":  0
+                                                                                     }
+                                                                                 ]
+                                                                             ]
+                                                                }
+                    }
+}

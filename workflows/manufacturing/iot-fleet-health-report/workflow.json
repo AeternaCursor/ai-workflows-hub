@@ -1,0 +1,723 @@
+﻿{
+    "meta":  {
+                 "instanceId":  "00b2d13d8f7b8034e314e4f3f6121cb6c0d621e57115a7d6c2616cf7fb4955e4",
+                 "templateCredsSetupCompleted":  true
+             },
+    "nodes":  [
+                  {
+                      "id":  "5e98116e-53f4-4e0a-956e-9ff6f864e93e",
+                      "name":  "Overview",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -2912,
+                                       48
+                                   ],
+                      "parameters":  {
+                                         "width":  480,
+                                         "height":  864,
+                                         "content":  "## 🛰️ FleetPulse AI — Daily Azure IoT Hub Fleet Health Report\n\nAn unattended daily fleet-health briefing for Azure IoT teams, with day-over-day trends delivered by severity to email.\n\n### How it works\n\n1. Each morning **Daily 9 AM** queries your entire Azure IoT Hub device fleet.\n2. Every device is classified (online / offline / stale / disabled) and a health % + severity is computed.\n3. Today is compared against yesterday\u0027s stored snapshot to produce ▲▼ trend numbers.\n4. GPT writes an executive summary that is assembled into a severity-styled HTML report.\n5. The snapshot is logged and the report is routed to a Critical, Warning, or Healthy email. A failed query sends an alert instead of failing silently.\n\n### Setup\n\n- **Azure IoT Hub** — paste a least-privilege `registryRead` connection string into **Fleet Config** (not `iothubowner`).\n- **OpenAI** — connect a credential on **AI Summary**.\n- **Gmail** — connect Gmail on the four email nodes and set your recipient(s).\n- **History table** — create a data table and select it on both Data Table nodes.\n\n### Customization\n\nTune `staleHours`, `warnBelowPct`, and `critBelowPct` in **Fleet Config**, and change the **Daily 9 AM** cron to your cadence. The SAS token is regenerated every run and never stored."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "906cf30a-6ca6-481d-9829-773d793a1489",
+                      "name":  "Section 1 — Trigger \u0026 Config",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -2320,
+                                       224
+                                   ],
+                      "parameters":  {
+                                         "color":  7,
+                                         "width":  480,
+                                         "height":  320,
+                                         "content":  "## 1️⃣ Trigger \u0026 Config\n\nCron fires the daily run. **Fleet Config** holds the IoT Hub connection string and health thresholds in one place."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "8c7457bb-fbd0-47b3-8c26-ec9163b2a38a",
+                      "name":  "Warning — Fleet Config",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -2048,
+                                       32
+                                   ],
+                      "parameters":  {
+                                         "color":  3,
+                                         "width":  300,
+                                         "height":  140,
+                                         "content":  "## ⚠️ Use a least-privilege key\n\nPaste a `registryRead` connection string into **Fleet Config** — never `iothubowner`."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "b83a6e6f-f388-4853-bb96-51a1074f806c",
+                      "name":  "Section 2 — Auth \u0026 Query",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -1792,
+                                       224
+                                   ],
+                      "parameters":  {
+                                         "color":  7,
+                                         "width":  520,
+                                         "height":  520,
+                                         "content":  "## 2️⃣ Authenticate \u0026 Query\n\nBuilds a short-lived SAS token, queries all IoT Hub devices (paginated), and emails an alert if the query fails."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "7f332086-760c-4407-aaf9-bcc1251c0517",
+                      "name":  "Section 3 — Classify \u0026 Compare",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -1248,
+                                       224
+                                   ],
+                      "parameters":  {
+                                         "color":  7,
+                                         "width":  680,
+                                         "height":  320,
+                                         "content":  "## 3️⃣ Classify \u0026 Compare\n\nBuckets devices by state, computes health % + severity, and diffs today vs. yesterday for trend arrows."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "2567b7bf-913a-4437-a58b-7d0c5c79878d",
+                      "name":  "Section 4 — AI Summary \u0026 Report",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -544,
+                                       224
+                                   ],
+                      "parameters":  {
+                                         "color":  7,
+                                         "width":  500,
+                                         "height":  320,
+                                         "content":  "## 4️⃣ AI Summary \u0026 Report\n\nGPT returns a structured summary; **Build Report** assembles a severity-styled HTML email subject + body."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "c3ea6e90-bedc-47e2-ab38-ac973e91efa7",
+                      "name":  "Section 5 — Persist \u0026 Route",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "position":  [
+                                       -32,
+                                       16
+                                   ],
+                      "parameters":  {
+                                         "color":  7,
+                                         "width":  520,
+                                         "height":  720,
+                                         "content":  "## 5️⃣ Persist \u0026 Route\n\nLogs today\u0027s snapshot, then routes the report to a Critical, Warning, or Healthy email by severity."
+                                     },
+                      "typeVersion":  1
+                  },
+                  {
+                      "id":  "652e10e0-9f2f-48e6-a267-3d59741eed27",
+                      "name":  "Daily 9 AM",
+                      "type":  "n8n-nodes-base.scheduleTrigger",
+                      "position":  [
+                                       -2256,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "rule":  {
+                                                      "interval":  [
+                                                                       {
+                                                                           "field":  "cronExpression",
+                                                                           "expression":  "0 9 * * *"
+                                                                       }
+                                                                   ]
+                                                  }
+                                     },
+                      "typeVersion":  1.2
+                  },
+                  {
+                      "id":  "8e8868b8-83f6-4f32-975b-d46f6f152061",
+                      "name":  "Fleet Config",
+                      "type":  "n8n-nodes-base.set",
+                      "position":  [
+                                       -2032,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "typeVersion":  3.5
+                  },
+                  {
+                      "id":  "eb05fb10-31d5-460c-b57f-a3c14ca4b85e",
+                      "name":  "Generate SAS Token",
+                      "type":  "n8n-nodes-base.code",
+                      "position":  [
+                                       -1712,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "jsCode":  "const crypto = require(\u0027crypto\u0027);\n\nconst cfg = $input.first().json;\nconst conn = cfg.connectionString;\nif (!conn) {\n  throw new Error(\u0027No connection string provided in Fleet Config.\u0027);\n}\n\nconst parts = {};\nconn.split(\u0027;\u0027).forEach(segment =\u003e {\n  const idx = segment.indexOf(\u0027=\u0027);\n  if (idx \u003e -1) {\n    parts[segment.substring(0, idx).trim()] = segment.substring(idx + 1).trim();\n  }\n});\n\nconst host = parts.HostName;\nconst policy = parts.SharedAccessKeyName;\nconst key = parts.SharedAccessKey;\n\nif (!host || !policy || !key) {\n  throw new Error(\u0027Connection string missing HostName, SharedAccessKeyName, or SharedAccessKey.\u0027);\n}\n\nconst resourceUri = encodeURIComponent(host);\nconst expiry = Math.floor(Date.now() / 1000) + 3600; // valid 1 hour\nconst toSign = resourceUri + String.fromCharCode(10) + expiry;\nconst hmac = crypto.createHmac(\u0027sha256\u0027, Buffer.from(key, \u0027base64\u0027));\nhmac.update(toSign);\nconst signature = encodeURIComponent(hmac.digest(\u0027base64\u0027));\n\nconst sasToken = \u0027SharedAccessSignature sr=\u0027 + resourceUri + \u0027\u0026sig=\u0027 + signature + \u0027\u0026se=\u0027 + expiry + \u0027\u0026skn=\u0027 + policy;\n\nreturn [{ json: {\n  sasToken,\n  hostName: host,\n  staleHours: cfg.staleHours || 24,\n  warnBelowPct: cfg.warnBelowPct != null ? cfg.warnBelowPct : 90,\n  critBelowPct: cfg.critBelowPct != null ? cfg.critBelowPct : 70,\n} }];"
+                                     },
+                      "typeVersion":  2
+                  },
+                  {
+                      "id":  "cc012f4e-4634-4e13-bd25-047641dd177d",
+                      "name":  "Query All Devices",
+                      "type":  "n8n-nodes-base.httpRequest",
+                      "onError":  "continueErrorOutput",
+                      "position":  [
+                                       -1488,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "url":  "=https://{{ $json.hostName }}/devices/query?api-version=2021-04-12",
+                                         "method":  "POST",
+                                         "options":  {
+                                                         "pagination":  {
+                                                                            "pagination":  {
+                                                                                               "parameters":  {
+                                                                                                                  "parameters":  [
+                                                                                                                                     {
+                                                                                                                                         "name":  "x-ms-continuation",
+                                                                                                                                         "type":  "headers",
+                                                                                                                                         "value":  "={{ $response.headers[\u0027x-ms-continuation\u0027] }}"
+                                                                                                                                     }
+                                                                                                                                 ]
+                                                                                                              },
+                                                                                               "maxRequests":  50,
+                                                                                               "limitPagesFetched":  true,
+                                                                                               "completeExpression":  "={{ !$response.headers[\u0027x-ms-continuation\u0027] }}",
+                                                                                               "paginationCompleteWhen":  "other"
+                                                                                           }
+                                                                        }
+                                                     },
+                                         "jsonBody":  "={ \"query\": \"SELECT deviceId, status, connectionState, lastActivityTime FROM devices\" }",
+                                         "sendBody":  true,
+                                         "sendHeaders":  true,
+                                         "specifyBody":  "json",
+                                         "headerParameters":  {
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "Authorization",
+                                                                                         "value":  "={{ $json.sasToken }}"
+                                                                                     },
+                                                                                     {
+                                                                                         "name":  "Content-Type",
+                                                                                         "value":  "application/json"
+                                                                                     }
+                                                                                 ]
+                                                              }
+                                     },
+                      "typeVersion":  4.2,
+                      "alwaysOutputData":  true
+                  },
+                  {
+                      "id":  "8c26b0f8-2de0-47c2-bbfc-bd0a33c93c2e",
+                      "name":  "Email — Run Failed",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       -1488,
+                                       576
+                                   ],
+                      "webhookId":  "efe414a1-1981-4945-8567-89eb99c215a2",
+                      "parameters":  {
+                                         "message":  "=The Azure IoT Hub device query failed, so today\u0027s fleet report could not be generated.\u003cbr\u003e\u003cbr\u003e\u003cb\u003eError:\u003c/b\u003e\u003cbr\u003e\u003cpre\u003e{{ JSON.stringify($json.error || $json, null, 2) }}\u003c/pre\u003e\u003cbr\u003eCheck the IoT Hub connection string / SAS policy and the workflow execution log.",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "=FleetPulse AI — daily run FAILED ({{ $now.format(\u0027yyyy-MM-dd\u0027) }})"
+                                     },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "2311fdcf-d07d-4400-b13c-401bc31dacf3",
+                      "name":  "Classify Fleet",
+                      "type":  "n8n-nodes-base.code",
+                      "position":  [
+                                       -1216,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "jsCode":  "// IoT Hub returns a JSON array; the HTTP node splits it into one item per device.\n// alwaysOutputData can also emit a single empty {} item when the fleet is empty.\nconst cfg = $(\"Generate SAS Token\").first().json;\nconst staleHours = cfg.staleHours || 24;\nconst devices = $input.all().map((i) =\u003e i.json).filter((d) =\u003e d \u0026\u0026 d.deviceId);\nconst now = Date.now();\nconst s = { total: devices.length, online: 0, offline: 0, stale: 0, disabled: 0, devices: [] };\nfor (const d of devices) {\n  const last = d.lastActivityTime ? new Date(d.lastActivityTime).getTime() : 0;\n  const ageHrs = last ? (now - last) / 3600000 : Infinity;\n  const state = d.connectionState === \u0027Connected\u0027 ? \u0027online\u0027 : \u0027offline\u0027;\n  if (d.status === \u0027disabled\u0027) s.disabled++;\n  else if (state === \u0027online\u0027) s.online++;\n  else if (ageHrs \u003e staleHours) s.stale++;\n  else s.offline++;\n  s.devices.push({ id: d.deviceId, state, status: d.status, ageHrs: Number.isFinite(ageHrs) ? Math.round(ageHrs) : null });\n}\nconst active = s.total - s.disabled;\ns.health_pct = active \u003e 0 ? Math.round((s.online / active) * 100) : 100;\nconst problem = s.offline + s.stale;\nconst warnBelow = cfg.warnBelowPct != null ? cfg.warnBelowPct : 90;\nconst critBelow = cfg.critBelowPct != null ? cfg.critBelowPct : 70;\nlet severity = \u0027healthy\u0027;\nif (s.health_pct \u003c critBelow || problem \u003e= Math.max(3, Math.ceil(active * 0.3))) severity = \u0027critical\u0027;\nelse if (s.health_pct \u003c warnBelow || problem \u003e 0) severity = \u0027warning\u0027;\ns.severity = severity;\ns.report_date = new Date().toISOString().slice(0, 10);\n// Top offenders for the AI narrative\ns.top_offenders = s.devices.filter((x) =\u003e x.state !== \u0027online\u0027 || x.status === \u0027disabled\u0027).slice(0, 15);\nreturn [{ json: s }];"
+                                     },
+                      "typeVersion":  2
+                  },
+                  {
+                      "id":  "1d4c7a50-bd1d-4962-ad81-bb5d04149727",
+                      "name":  "Read Previous Run",
+                      "type":  "n8n-nodes-base.dataTable",
+                      "position":  [
+                                       -976,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "limit":  1,
+                                         "orderBy":  true,
+                                         "operation":  "get",
+                                         "dataTableId":  {
+                                                             "__rl":  true,
+                                                             "mode":  "list",
+                                                             "value":  "",
+                                                             "cachedResultName":  "Select the FleetPulse history data table"
+                                                         },
+                                         "orderByColumn":  "report_date"
+                                     },
+                      "typeVersion":  1.1,
+                      "alwaysOutputData":  true
+                  },
+                  {
+                      "id":  "4b404375-b943-4436-8d8a-e9d72f8a3345",
+                      "name":  "Compute Deltas",
+                      "type":  "n8n-nodes-base.code",
+                      "position":  [
+                                       -736,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "jsCode":  "const cur = $(\"Classify Fleet\").first().json;\nconst prevItems = $input.all().filter((i) =\u003e i.json \u0026\u0026 Object.keys(i.json).length \u003e 0 \u0026\u0026 i.json.report_date);\nconst prev = prevItems.length ? prevItems[0].json : null;\nfunction delta(field) {\n  if (!prev || prev[field] == null) return null;\n  return cur[field] - prev[field];\n}\nconst deltas = {\n  total: delta(\u0027total\u0027),\n  online: delta(\u0027online\u0027),\n  offline: delta(\u0027offline\u0027),\n  stale: delta(\u0027stale\u0027),\n  disabled: delta(\u0027disabled\u0027),\n  health_pct: delta(\u0027health_pct\u0027),\n};\nreturn [{ json: { ...cur, prev: prev || null, deltas } }];"
+                                     },
+                      "typeVersion":  2
+                  },
+                  {
+                      "id":  "6c30d858-7486-4e91-92d0-229aa63c2eb5",
+                      "name":  "AI Summary",
+                      "type":  "@n8n/n8n-nodes-langchain.openAi",
+                      "position":  [
+                                       -512,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "modelId":  {
+                                                         "__rl":  true,
+                                                         "mode":  "list",
+                                                         "value":  "",
+                                                         "cachedResultUrl":  "",
+                                                         "cachedResultName":  ""
+                                                     },
+                                         "options":  {
+
+                                                     },
+                                         "messages":  {
+                                                          "values":  [
+                                                                         {
+                                                                             "role":  "system",
+                                                                             "content":  "You are an IoT fleet operations analyst writing a daily executive briefing. You receive a JSON object with current fleet counts, a computed severity, day-over-day deltas vs the previous run, and a list of top offending devices. Respond with a JSON object ONLY, using exactly these keys: \"headline\" (one punchy sentence summarising fleet health and the most important trend), \"narrative_html\" (2-4 short HTML paragraphs/lists using \u003cp\u003e, \u003cul\u003e, \u003cli\u003e interpreting the trends and calling out the worst devices; do not repeat the raw count table), \"risks\" (array of 2-4 concise risk strings), \"recommendations\" (array of exactly 3 concrete, actionable recommendation strings). Be specific, reference the deltas (rising/falling), and never invent devices not present in the data."
+                                                                         },
+                                                                         {
+                                                                             "content":  "=Fleet data with day-over-day deltas:{{ JSON.stringify($json) }}"
+                                                                         }
+                                                                     ]
+                                                      },
+                                         "jsonOutput":  true
+                                     },
+                      "typeVersion":  1.6
+                  },
+                  {
+                      "id":  "5d12d80d-70da-497f-b893-d3fa9cb0468d",
+                      "name":  "Build Report",
+                      "type":  "n8n-nodes-base.code",
+                      "position":  [
+                                       -272,
+                                       336
+                                   ],
+                      "parameters":  {
+                                         "jsCode":  "const LF = String.fromCharCode(10);\nlet ai = ($json \u0026\u0026 $json.message \u0026\u0026 $json.message.content) ? $json.message.content : {};\nif (typeof ai === \u0027string\u0027) { try { ai = JSON.parse(ai); } catch (e) { ai = { narrative_html: ai }; } }\nconst d = $(\"Compute Deltas\").first().json;\nconst dl = d.deltas || {};\nfunction arrow(v) {\n  if (v == null) return \u0027\u0027;\n  if (v \u003e 0) return \u0027 (\\u25B2\u0027 + v + \u0027)\u0027;\n  if (v \u003c 0) return \u0027 (\\u25BC\u0027 + Math.abs(v) + \u0027)\u0027;\n  return \u0027 (\\u25A00)\u0027;\n}\nconst risks = Array.isArray(ai.risks) ? ai.risks : [];\nconst recs = Array.isArray(ai.recommendations) ? ai.recommendations : [];\nconst badge = { critical: \u0027\\uD83D\\uDD34 CRITICAL\u0027, warning: \u0027\\uD83D\\uDFE0 WARNING\u0027, healthy: \u0027\\uD83D\\uDFE2 HEALTHY\u0027 }[d.severity] || d.severity;\nconst p = [];\np.push(\u0027\u003ch2\u003eIoT Fleet Health \\u2014 \u0027 + d.report_date + \u0027\u003c/h2\u003e\u0027);\np.push(\u0027\u003cp\u003e\u003cb\u003eStatus:\u003c/b\u003e \u0027 + badge + \u0027 \u0026nbsp;\\u00B7\u0026nbsp; \u003cb\u003eHealth:\u003c/b\u003e \u0027 + d.health_pct + \u0027%\u0027 + arrow(dl.health_pct) + \u0027\u003c/p\u003e\u0027);\nif (ai.headline) p.push(\u0027\u003cp\u003e\u003cb\u003e\u0027 + ai.headline + \u0027\u003c/b\u003e\u003c/p\u003e\u0027);\np.push(\u0027\u003ch3\u003eFleet at a glance (vs previous run)\u003c/h3\u003e\u0027);\np.push(\u0027\u003cul\u003e\u0027);\np.push(\u0027\u003cli\u003eTotal devices: \u0027 + d.total + arrow(dl.total) + \u0027\u003c/li\u003e\u0027);\np.push(\u0027\u003cli\u003eOnline: \u0027 + d.online + arrow(dl.online) + \u0027\u003c/li\u003e\u0027);\np.push(\u0027\u003cli\u003eOffline: \u0027 + d.offline + arrow(dl.offline) + \u0027\u003c/li\u003e\u0027);\np.push(\u0027\u003cli\u003eStale (\u0026gt;24h): \u0027 + d.stale + arrow(dl.stale) + \u0027\u003c/li\u003e\u0027);\np.push(\u0027\u003cli\u003eDisabled: \u0027 + d.disabled + arrow(dl.disabled) + \u0027\u003c/li\u003e\u0027);\np.push(\u0027\u003c/ul\u003e\u0027);\nif (ai.narrative_html) p.push(ai.narrative_html);\nif (risks.length) { p.push(\u0027\u003ch3\u003eKey risks\u003c/h3\u003e\u003cul\u003e\u0027); for (const r of risks) p.push(\u0027\u003cli\u003e\u0027 + r + \u0027\u003c/li\u003e\u0027); p.push(\u0027\u003c/ul\u003e\u0027); }\nif (recs.length) { p.push(\u0027\u003ch3\u003eRecommended actions\u003c/h3\u003e\u003cul\u003e\u0027); for (const r of recs) p.push(\u0027\u003cli\u003e\u0027 + r + \u0027\u003c/li\u003e\u0027); p.push(\u0027\u003c/ul\u003e\u0027); }\np.push(\u0027\u003chr\u003e\u003cp style=\"color:#888;font-size:12px\"\u003eFleetPulse AI \\u00B7 automated with n8n\u003c/p\u003e\u0027);\nconst html = p.join(LF);\nconst prefix = d.severity === \u0027critical\u0027 ? \u0027\\uD83D\\uDD34 URGENT \\u2014 \u0027 : d.severity === \u0027warning\u0027 ? \u0027\\uD83D\\uDFE0 \u0027 : \u0027\\u2705 \u0027;\nconst subject = prefix + \u0027IoT Fleet Report \u0027 + d.report_date + \u0027 \\u2014 \u0027 + d.health_pct + \u0027% healthy\u0027;\nconst slackText = badge + \u0027  |  Fleet health \u0027 + d.health_pct + \u0027%\u0027 + arrow(dl.health_pct) + \u0027  |  \u0027 + d.online + \u0027 online / \u0027 + d.offline + \u0027 offline / \u0027 + d.stale + \u0027 stale / \u0027 + d.disabled + \u0027 disabled (of \u0027 + d.total + \u0027)\u0027 + (ai.headline ? (LF + ai.headline) : \u0027\u0027);\nreturn [{ json: {\n  report_date: d.report_date,\n  total: d.total, online: d.online, offline: d.offline, stale: d.stale, disabled: d.disabled,\n  health_pct: d.health_pct, severity: d.severity,\n  subject, html, slackText,\n} }];"
+                                     },
+                      "typeVersion":  2
+                  },
+                  {
+                      "id":  "07e187a1-53f3-4c5b-b028-08e0fea1b91e",
+                      "name":  "Route by Severity",
+                      "type":  "n8n-nodes-base.switch",
+                      "position":  [
+                                       32,
+                                       224
+                                   ],
+                      "parameters":  {
+                                         "rules":  {
+                                                       "values":  [
+                                                                      {
+                                                                          "outputKey":  "critical",
+                                                                          "conditions":  {
+                                                                                             "options":  {
+                                                                                                             "version":  1,
+                                                                                                             "leftValue":  "",
+                                                                                                             "caseSensitive":  false,
+                                                                                                             "typeValidation":  "strict"
+                                                                                                         },
+                                                                                             "combinator":  "and",
+                                                                                             "conditions":  [
+                                                                                                                {
+                                                                                                                    "operator":  {
+                                                                                                                                     "type":  "string",
+                                                                                                                                     "operation":  "equals"
+                                                                                                                                 },
+                                                                                                                    "leftValue":  "={{ $json.severity }}",
+                                                                                                                    "rightValue":  "critical"
+                                                                                                                }
+                                                                                                            ]
+                                                                                         },
+                                                                          "renameOutput":  true
+                                                                      },
+                                                                      {
+                                                                          "outputKey":  "warning",
+                                                                          "conditions":  {
+                                                                                             "options":  {
+                                                                                                             "version":  1,
+                                                                                                             "leftValue":  "",
+                                                                                                             "caseSensitive":  false,
+                                                                                                             "typeValidation":  "strict"
+                                                                                                         },
+                                                                                             "combinator":  "and",
+                                                                                             "conditions":  [
+                                                                                                                {
+                                                                                                                    "operator":  {
+                                                                                                                                     "type":  "string",
+                                                                                                                                     "operation":  "equals"
+                                                                                                                                 },
+                                                                                                                    "leftValue":  "={{ $json.severity }}",
+                                                                                                                    "rightValue":  "warning"
+                                                                                                                }
+                                                                                                            ]
+                                                                                         },
+                                                                          "renameOutput":  true
+                                                                      },
+                                                                      {
+                                                                          "outputKey":  "healthy",
+                                                                          "conditions":  {
+                                                                                             "options":  {
+                                                                                                             "version":  1,
+                                                                                                             "leftValue":  "",
+                                                                                                             "caseSensitive":  false,
+                                                                                                             "typeValidation":  "strict"
+                                                                                                         },
+                                                                                             "combinator":  "and",
+                                                                                             "conditions":  [
+                                                                                                                {
+                                                                                                                    "operator":  {
+                                                                                                                                     "type":  "string",
+                                                                                                                                     "operation":  "equals"
+                                                                                                                                 },
+                                                                                                                    "leftValue":  "={{ $json.severity }}",
+                                                                                                                    "rightValue":  "healthy"
+                                                                                                                }
+                                                                                                            ]
+                                                                                         },
+                                                                          "renameOutput":  true
+                                                                      }
+                                                                  ]
+                                                   },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "typeVersion":  3.4
+                  },
+                  {
+                      "id":  "db239a44-5793-490b-9f46-a77306897c50",
+                      "name":  "Email — Critical Alert",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       288,
+                                       128
+                                   ],
+                      "webhookId":  "57bc9a4f-3eda-441a-b9c3-cbbb5427afd0",
+                      "parameters":  {
+                                         "message":  "={{ $json.html }}",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "={{ $json.subject }}"
+                                     },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "e50ac0e4-0f3b-4e02-b912-2fe30d36aaac",
+                      "name":  "Email — Warning",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       288,
+                                       320
+                                   ],
+                      "webhookId":  "b7b08f53-c7b3-405a-a063-a1f727f17229",
+                      "parameters":  {
+                                         "message":  "={{ $json.html }}",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "={{ $json.subject }}"
+                                     },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "81c4af08-df50-4cd1-80b1-a96f2d3b6b24",
+                      "name":  "Email — Daily Digest",
+                      "type":  "n8n-nodes-base.gmail",
+                      "position":  [
+                                       288,
+                                       528
+                                   ],
+                      "webhookId":  "0ebe14ae-e631-4e63-992e-e5a9fa6bd31e",
+                      "parameters":  {
+                                         "message":  "={{ $json.html }}",
+                                         "options":  {
+
+                                                     },
+                                         "subject":  "={{ $json.subject }}"
+                                     },
+                      "typeVersion":  2.1
+                  },
+                  {
+                      "id":  "d4e53d3a-ac37-4f48-a198-12abd9b8f72c",
+                      "name":  "Log Today to History",
+                      "type":  "n8n-nodes-base.dataTable",
+                      "position":  [
+                                       32,
+                                       480
+                                   ],
+                      "parameters":  {
+                                         "columns":  {
+                                                         "value":  {
+                                                                       "stale":  "={{ $json.stale }}",
+                                                                       "total":  "={{ $json.total }}",
+                                                                       "online":  "={{ $json.online }}",
+                                                                       "offline":  "={{ $json.offline }}",
+                                                                       "disabled":  "={{ $json.disabled }}",
+                                                                       "severity":  "={{ $json.severity }}",
+                                                                       "health_pct":  "={{ $json.health_pct }}",
+                                                                       "report_date":  "={{ $json.report_date }}"
+                                                                   },
+                                                         "schema":  [
+                                                                        {
+                                                                            "id":  "report_date",
+                                                                            "type":  "string",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "report_date",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "total",
+                                                                            "type":  "number",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "total",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "online",
+                                                                            "type":  "number",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "online",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "offline",
+                                                                            "type":  "number",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "offline",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "stale",
+                                                                            "type":  "number",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "stale",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "disabled",
+                                                                            "type":  "number",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "disabled",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "health_pct",
+                                                                            "type":  "number",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "health_pct",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        },
+                                                                        {
+                                                                            "id":  "severity",
+                                                                            "type":  "string",
+                                                                            "display":  true,
+                                                                            "required":  false,
+                                                                            "displayName":  "severity",
+                                                                            "defaultMatch":  false,
+                                                                            "canBeUsedToMatch":  true
+                                                                        }
+                                                                    ],
+                                                         "mappingMode":  "defineBelow"
+                                                     },
+                                         "options":  {
+
+                                                     },
+                                         "dataTableId":  {
+                                                             "__rl":  true,
+                                                             "mode":  "list",
+                                                             "value":  "",
+                                                             "cachedResultName":  "Select the FleetPulse history data table"
+                                                         }
+                                     },
+                      "typeVersion":  1.1
+                  }
+              ],
+    "pinData":  {
+
+                },
+    "connections":  {
+                        "AI Summary":  {
+                                           "main":  [
+                                                        [
+                                                            {
+                                                                "node":  "Build Report",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ]
+                                                    ]
+                                       },
+                        "Daily 9 AM":  {
+                                           "main":  [
+                                                        [
+                                                            {
+                                                                "node":  "Fleet Config",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ]
+                                                    ]
+                                       },
+                        "Build Report":  {
+                                             "main":  [
+                                                          [
+                                                              {
+                                                                  "node":  "Route by Severity",
+                                                                  "type":  "main",
+                                                                  "index":  0
+                                                              },
+                                                              {
+                                                                  "node":  "Log Today to History",
+                                                                  "type":  "main",
+                                                                  "index":  0
+                                                              }
+                                                          ]
+                                                      ]
+                                         },
+                        "Fleet Config":  {
+                                             "main":  [
+                                                          [
+                                                              {
+                                                                  "node":  "Generate SAS Token",
+                                                                  "type":  "main",
+                                                                  "index":  0
+                                                              }
+                                                          ]
+                                                      ]
+                                         },
+                        "Classify Fleet":  {
+                                               "main":  [
+                                                            [
+                                                                {
+                                                                    "node":  "Read Previous Run",
+                                                                    "type":  "main",
+                                                                    "index":  0
+                                                                }
+                                                            ]
+                                                        ]
+                                           },
+                        "Compute Deltas":  {
+                                               "main":  [
+                                                            [
+                                                                {
+                                                                    "node":  "AI Summary",
+                                                                    "type":  "main",
+                                                                    "index":  0
+                                                                }
+                                                            ]
+                                                        ]
+                                           },
+                        "Query All Devices":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Classify Fleet",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ],
+                                                               [
+                                                                   {
+                                                                       "node":  "Email — Run Failed",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Read Previous Run":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Compute Deltas",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Route by Severity":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Email — Critical Alert",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ],
+                                                               [
+                                                                   {
+                                                                       "node":  "Email — Warning",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ],
+                                                               [
+                                                                   {
+                                                                       "node":  "Email — Daily Digest",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Generate SAS Token":  {
+                                                   "main":  [
+                                                                [
+                                                                    {
+                                                                        "node":  "Query All Devices",
+                                                                        "type":  "main",
+                                                                        "index":  0
+                                                                    }
+                                                                ]
+                                                            ]
+                                               }
+                    }
+}

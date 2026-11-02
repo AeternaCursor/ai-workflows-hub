@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工作流目录 · AI Workflows Hub</title>
+<meta name="description" content="AI Workflows Hub 全部收录工作流的可搜索目录：按行业、平台、成本筛选。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+<script src="catalog-data.js"></script>
+<style>
+  :root { --bg:#0a0e1a; --card:#131b30; --line:#2a3550; --text:#e8ecf5; --muted:#8b93a8; --accent:#4fc3f7; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif; }
+  .wrap { max-width:1000px; margin:0 auto; padding:48px 20px 100px; }
+  header { text-align:center; margin-bottom:32px; }
+  .badge { display:inline-block; font-size:12px; letter-spacing:2px; color:var(--accent); border:1px solid rgba(79,195,247,.35); padding:5px 14px; border-radius:999px; margin-bottom:14px; background:rgba(79,195,247,.06); }
+  h1 { font-size:clamp(26px,4.5vw,40px); font-weight:800; }
+  .sub { color:var(--muted); margin-top:8px; font-size:14px; }
+  .sub a { color:var(--accent); text-decoration:none; }
+  .controls { position:sticky; top:0; z-index:10; background:linear-gradient(var(--bg) 80%, transparent); padding:12px 0 10px; display:flex; flex-direction:column; gap:8px; }
+  .search { width:100%; background:var(--card); border:1px solid var(--line); border-radius:10px; color:var(--text); padding:10px 14px; font-size:14px; outline:none; font-family:inherit; }
+  .search:focus { border-color:var(--accent); }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; }
+  .grp { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .grp::before { content:attr(data-label); font-size:11px; color:var(--muted); margin-right:2px; }
+  .chip { border:1px solid var(--line); background:transparent; color:var(--muted); padding:4px 12px; border-radius:999px; font-size:12px; cursor:pointer; font-family:inherit; transition:all .2s; }
+  .chip.on { background:var(--accent); color:#0a0e1a; border-color:var(--accent); font-weight:600; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:14px; margin-top:20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; text-decoration:none; color:var(--text); display:flex; flex-direction:column; gap:8px; transition:transform .25s, border-color .25s; }
+  .card:hover { transform:translateY(-3px); border-color:var(--accent); }
+  .meta { display:flex; gap:8px; align-items:center; font-size:11px; }
+  .pill { padding:2px 9px; border-radius:6px; background:rgba(79,195,247,.1); color:var(--accent); font-weight:600; }
+  .cost { color:var(--muted); }
+  h3 { font-size:15px; }
+  p { font-size:13px; color:var(--muted); line-height:1.6; flex:1; }
+  .tags { display:flex; gap:6px; flex-wrap:wrap; }
+  .tag { font-size:11px; color:var(--muted); border:1px solid var(--line); border-radius:5px; padding:1px 7px; }
+  .count { text-align:center; color:var(--muted); font-size:12px; margin-top:18px; }
+  @media (max-width:600px){ .grp::before{ width:100%; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">AI WORKFLOWS HUB · CATALOG</div>
+    <h1>工作流目录</h1>
+    <div class="sub">全部收录工作流，点击卡片进入教程。返回 <a href="./">AI 发展史时间线</a> 或 <a href="https://github.com/AeternaCursor/ai-workflows-hub" target="_blank" rel="noopener">GitHub 仓库</a></div>
+  </header>
+
+  <div class="controls">
+    <input class="search" id="q" placeholder="搜索：行业 / 名称 / 标签，如 Redis、发票、出图…">
+    <div class="chips">
+      <div class="grp" data-label="行业" id="fInd"></div>
+      <div class="grp" data-label="平台" id="fPlat"></div>
+      <div class="grp" data-label="成本" id="fCost"></div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="count" id="count"></div>
+</div>
+
+<script>
+(function () {
+  const data = window.CATALOG_DATA;
+  const REPO = "https://github.com/AeternaCursor/ai-workflows-hub/tree/main/workflows/";
+  const state = { q: "", ind: "全部", plat: "全部", cost: "全部" };
+
+  const uniq = k => ["全部", ...new Set(data.map(d => d[k]))];
+  function mkChips(boxId, key, values) {
+    const box = document.getElementById(boxId);
+    values.forEach(v => {
+      const b = document.createElement("button");
+      b.className = "chip" + (v === "全部" ? " on" : "");
+      b.textContent = v;
+      b.onclick = () => {
+        state[key] = v;
+        [...box.children].forEach(c => c.classList.toggle("on", c === b));
+        render();
+      };
+      box.appendChild(b);
+    });
+  }
+  mkChips("fInd", "ind", uniq("industry"));
+  mkChips("fPlat", "plat", uniq("platform"));
+  mkChips("fCost", "cost", uniq("cost"));
+
+  document.getElementById("q").addEventListener("input", e => { state.q = e.target.value.trim().toLowerCase(); render(); });
+
+  function render() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+    const list = data.filter(d =>
+      (state.ind === "全部" || d.industry === state.ind) &&
+      (state.plat === "全部" || d.platform === state.plat) &&
+      (state.cost === "全部" || d.cost === state.cost) &&
+      (!state.q || (d.title + d.titleEn + d.desc + d.tags.join() + d.industry + d.platform).toLowerCase().includes(state.q)));
+    list.forEach(d => {
+      const a = document.createElement("a");
+      a.className = "card";
+      a.href = REPO + d.slug;
+      a.target = "_blank"; a.rel = "noopener";
+      a.innerHTML = `
+        <div class="meta"><span class="pill">${d.industry}</span><span class="pill">${d.platform}</span><span class="cost">${d.cost === "免费" ? "🆓 免费" : "💰 " + d.cost + "成本"}</span></div>
+        <h3>${d.title}</h3>
+        <p>${d.desc}</p>
+        <div class="tags">${d.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>`;
+      grid.appendChild(a);
+    });
+    document.getElementById("count").textContent =
+      `${list.length} / ${data.length} 个工作流` + (list.length ? "" : " —— 没有匹配，试试放宽筛选");
+  }
+  render();
+})();
+</script>
+</body>
+</html>

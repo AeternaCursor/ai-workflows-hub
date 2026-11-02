@@ -43,7 +43,7 @@
 | 行业标杆项目 | `resources/industry-references.md` | 按行业分组追加 |
 | 某行业新模板/新场景 | `workflows/<行业>/README.md` | 「精选参考」表追加；若该行业目录不存在则新建（含定位/场景/待贡献三段式） |
 | AI 重大历史事件 | `timeline/data.js` | `TIMELINE_DATA` 数组追加条目（格式见下） |
-| **收录新工作流本体** | `workflows/<行业>/<slug>/` | **四件套缺一不可**：`workflow.json`（可导入）+ `README.md`（速览+来源链接）+ `TUTORIAL.md`（手把手）+ `CASES.md`（案例+代码+迭代提示词）。标准见 CONTRIBUTING.md。同时在该行业 README「精选参考」表首行加 📦（已收录）条目，并更新主 README 的收录计数 |
+| **收录新工作流本体** | `workflows/<行业>/<slug>/` | **四件套缺一不可**：`workflow.json`（可导入）+ `README.md`（速览+来源链接）+ `TUTORIAL.md`（手把手）+ `CASES.md`（案例+代码+迭代提示词）。标准见 CONTRIBUTING.md。同时：①该行业 README「精选参考」表首行加 📦（已收录）条目；②`timeline/catalog-data.js` 的 `CATALOG_DATA` 追加一条（industry/platform/cost/title/titleEn/slug/desc/tags）；③更新主 README 的收录计数 |
 
 **timeline/data.js 条目格式**（严格遵守）：
 

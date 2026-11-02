@@ -5,6 +5,8 @@
 [![Timeline](https://img.shields.io/badge/AI%20%E5%8F%91%E5%B1%95%E5%8F%B2-%E5%8A%A8%E7%94%BB%E6%97%B6%E9%97%B4%E7%BA%BF-4fc3f7)](https://aeternacursor.github.io/ai-workflows-hub/)
 [![Issues](https://img.shields.io/github/issues/AeternaCursor/ai-workflows-hub)](https://github.com/AeternaCursor/ai-workflows-hub/issues)
 
+中文 | [English](README.en.md)
+
 > 各行业、各领域的 AI 工作流资源中心：精选模板、行业参考实现、平台引擎导航。
 > Curated AI workflows across industries — templates, reference implementations, and platform engines.
 
@@ -12,9 +14,9 @@
 
 一个**跨平台、按行业分类**的 AI 工作流精选库：
 
-- 🏭 **按行业找**：金融、营销、电商、法务、HR、教育、内容创作、客服、软件研发、通用办公
+- 🏭 **按行业找**：金融、营销、电商、法务、HR、教育、内容创作、客服、软件研发、通用办公、**制造、医疗、物流**
 - 🧰 **按平台找**：n8n / Dify / Coze Studio / Langflow / Flowise / ComfyUI / GitHub Agentic Workflows
-- 📦 **拿来即用**：已收录 **12 个可导入工作流，覆盖全部 10 个行业**（n8n ×9 + ComfyUI ×3），每个附凭据清单、使用步骤与 **TUTORIAL.md 手把手实操教程**，见 [workflows/](workflows/)
+- 📦 **拿来即用**：已收录 **15 个可导入工作流，覆盖 13 个行业**（n8n ×12 + ComfyUI ×3），四件套配置（JSON + README + TUTORIAL + CASES 双案例），可搜索目录：[Catalog](https://aeternacursor.github.io/ai-workflows-hub/catalog.html)
 - 🕰️ **AI 发展史**：[动画时间线](https://aeternacursor.github.io/ai-workflows-hub/)，从 1943 年人工神经元到 Agent 时代
 - 🔄 **持续维护**：每周定时捕捉新动态，[AI 提示词驱动更新](prompts/update-hub.md)
 
@@ -56,6 +58,9 @@ flowchart LR
 | 💬 客服 | [workflows/customer-service](workflows/customer-service) | Dify / Coze | 工单分类、智能应答 |
 | 💻 软件研发 | [workflows/software-dev](workflows/software-dev) | GitHub / n8n | [gh-aw](https://github.com/github/gh-aw)（Agentic Workflows） |
 | 🗂️ 通用办公 | [workflows/general-office](workflows/general-office) | n8n | 邮件、会议纪要、文档处理 |
+| 🏭 制造 | [workflows/manufacturing](workflows/manufacturing) | n8n | [IoT 设备健康日报](workflows/manufacturing/iot-fleet-health-report/)（已收录） |
+| 🏥 医疗 | [workflows/healthcare](workflows/healthcare) | n8n | [AI 预检分诊与预约](workflows/healthcare/medical-triage-appointment/)（已收录，合规优先） |
+| 🚚 物流 | [workflows/logistics](workflows/logistics) | n8n | [三快递轨迹聚合](workflows/logistics/multi-carrier-tracking/)（已收录） |
 
 ## 平台速查
 
