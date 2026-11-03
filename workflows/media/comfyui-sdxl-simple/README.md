@@ -1,6 +1,7 @@
 ﻿# SDXL 文生图（简洁版）
 
 > 来源：[ComfyUI 官方模板 image_sdxl_simple](https://github.com/comfy-org/workflow_templates/blob/main/templates/image_sdxl_simple.json) · MIT · 11 KB
+> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)

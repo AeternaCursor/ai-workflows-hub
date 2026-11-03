@@ -1,6 +1,7 @@
 # Wan 2.2 文生视频（5B 轻量版）
 
 > 来源：[ComfyUI 官方示例 text_to_video_wan22_5B](https://github.com/comfyanonymous/ComfyUI_examples/blob/master/wan22/text_to_video_wan22_5B.json) · MIT
+> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)

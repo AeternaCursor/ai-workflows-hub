@@ -1,6 +1,7 @@
 ﻿# AI 代码审查与 PR 自动打标
 
 > 来源：[n8n 官方模板 #11967](https://n8n.io/workflows/11967) · 22 节点
+> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)

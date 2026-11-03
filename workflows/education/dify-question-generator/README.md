@@ -1,9 +1,11 @@
 # Dify 智能出卷（网页/文本 → 带答案试卷）
 
 > 来源：[awesome-dify-workflow · edu_question_gen](https://github.com/aircrushin/awesome-dify-workflow/blob/main/DSLs/edu_question_gen.yml) · DSL v0.1.3
+> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)
+> 📄 产出格式预览：[sample-output.md](sample-output.md)（按提示词结构复现的完整试卷样例）
 
 教师填一张表单（年级/科目/题型/数量/难度/参考资料），Dify 自动抓取或读取
 参考资料，两段 LLM（出题 → 校对）产出带标准答案标记的 Markdown 试卷。

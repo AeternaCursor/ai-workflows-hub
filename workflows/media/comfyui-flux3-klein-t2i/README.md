@@ -1,6 +1,7 @@
 # FLUX.3 Klein 文生图（int8 量化版）
 
 > 来源：[ComfyUI 官方模板 image_flux3_klein_t2i](https://github.com/comfy-org/workflow_templates/blob/main/templates/image_flux3_klein_t2i.json) · MIT
+> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)

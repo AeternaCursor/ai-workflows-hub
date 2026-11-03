@@ -1,6 +1,7 @@
 ﻿# Qwen Image 2.1 Turbo 文生图
 
 > 来源：[ComfyUI 官方模板 image_qwen_image_2_1_turbo_t2i](https://github.com/comfy-org/workflow_templates/blob/main/templates/image_qwen_image_2_1_turbo_t2i.json) · MIT
+> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)
