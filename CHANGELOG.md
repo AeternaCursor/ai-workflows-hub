@@ -2,7 +2,7 @@
 
 格式：`- YYYY-MM-DD 变更内容（来源）`，新条目追加在最上方。
 
-- 2026-11-03 透明化+真机实测：全库 18 个 README 增「实测状态」标注（CONTRIBUTING 立标准）；**FLUX.3 Klein 本机真机跑通**（RTX 5060 Ti 16GB：冷启动 60s / 热出图 36s / 峰值显存 15.6GB），实测记录与踩坑（gated 仓库镜像、断点续传、seed 复用）回写 TUTORIAL/CASES，附实测产出图；Dify 出卷配完整试卷样例文件
+- 2026-11-03 透明化+真机实测：全库 18 个 README 增「实测状态」标注（CONTRIBUTING 立标准）；**FLUX.3 Klein 本机真机跑通**（RTX 5060 Ti 16GB：冷启动 60s / 热出图 36s / 峰值显存 15573MiB），实测记录与踩坑（gated 仓库镜像、断点续传、seed 复用）回写 TUTORIAL/CASES，附实测产出图；Dify 出卷配完整试卷样例文件
 - 2026-11-03 GitHub 整合更新：收录 3 个新工作流达 18 个（ComfyUI FLUX.3 Klein 文生图 + Wan2.2 5B 视频、**首个 Dify 工作流**「智能出卷」，均四件套）；media 精选参考补 Z-Image Turbo；quickstart 增 n8n 官方 starter-kit 路线；template-collections 增 12,333+ 全量模板镜像与 awesome-dify-workflow 合集
 - 2026-11-02 英文 README 增 13 行业案例索引；catalog 补 og meta；时间线↔目录双向互链（双语）；扫尾打磨
 - 2026-11-02 新增三行业（制造/医疗/物流）×3 工作流，总量 15 个覆盖 13 行业；上线可搜索工作流目录页（/catalog.html，数据驱动）；新增英文版 README（README.en.md）

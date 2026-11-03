@@ -37,6 +37,13 @@
 Every entry ships with an importable JSON, a node-by-node TUTORIAL, and CASES containing
 worked examples (real input → output), copyable code, and an AI-customization prompt.
 
+**Test status (honesty labels)**: every workflow README carries a `🧪 Test status` line.
+`Original upstream file (import-ready) + doc-level tutorial` means the workflow file is
+unmodified from its official/community source, while the tutorial was written from official
+docs without per-machine verification. `Verified on real hardware` (currently FLUX.3 Klein:
+RTX 5060 Ti 16GB, cold start 60s / warm 36s, peak VRAM 15573 MiB) means it was actually run
+and measured on this machine.
+
 ## Learning path
 
 ```

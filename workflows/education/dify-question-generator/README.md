@@ -1,7 +1,7 @@
 # Dify 智能出卷（网页/文本 → 带答案试卷）
 
 > 来源：[awesome-dify-workflow · edu_question_gen](https://github.com/aircrushin/awesome-dify-workflow/blob/main/DSLs/edu_question_gen.yml) · DSL v0.1.3
-> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
+> 🧪 实测状态：workflow 文件为上游原版（取自社区精选合集，未改动，导入即用）；教程为文档级（参数依据 DSL 结构与官方文档编写，未逐机真机验证）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)
