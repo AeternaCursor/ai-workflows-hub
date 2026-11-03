@@ -12,6 +12,7 @@
 | 工作流 | 平台 | 说明 |
 |---|---|---|
 | 📦 [PDF 一键生成测验题](pdf-quiz-generator/)（已收录） | n8n | 教材 PDF → OpenAI 出题 → Google Forms 测验 |
+| 📦 [Dify 智能出卷](dify-question-generator/)（已收录） | Dify | 网页/文本 → 两段 LLM（出题+审校）→ 带答案 Markdown 试卷 |
 | 多步 RAG 答疑管线 | Dify | [Marketplace](https://marketplace.dify.ai/templates) 官方示例：问题抽取 → 循环检索 → 引用生成 |
 | Quiz 生成器 | Flowise / Langflow | 知识点 → 选择题/简答题 + 答案解析 |
 

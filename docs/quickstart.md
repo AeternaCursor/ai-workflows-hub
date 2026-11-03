@@ -41,6 +41,11 @@ npx n8n
 
 **方式 C：n8n Cloud（零安装）**：注册 [n8n.io](https://n8n.io) 试用账号，在线版直接用。
 
+**方式 D：Self-hosted AI Starter Kit（本地全家桶）**：n8n 官方维护的
+[self-hosted-ai-starter-kit](https://github.com/n8n-io/self-hosted-ai-starter-kit)（15k+ star），
+一条 docker compose 同时起 n8n + Ollama + Qwen 本地模型 + 数据库——
+**连 AI Key 都不用申请**，适合想把整个 AI 环境装进本地的玩法。
+
 ### 2. 进入编辑器
 
 浏览器打开 http://localhost:5678 → 首次会让你注册一个**本地管理员账号**（数据只存在你电脑上）。
@@ -103,8 +108,9 @@ SDXL 基础底模 `sd_xl_base_1.0.safetensors`：
 3. 在正向提示词框输入：`a cute cat astronaut, floating in space, cinematic lighting`
 4. 点右侧 **Queue Prompt** → 等待 → 第一张 AI 图生成 🎉
 
-跑通后进阶：换用仓库里的 [Qwen Image 模板](../workflows/media/comfyui-qwen-image-turbo-t2i/)（中文提示词更友好）或
-[Wan2.1 文生视频](../workflows/media/comfyui-wan-text-to-video/)（8GB 显存可跑），模型清单在各自 README。
+跑通后进阶：换用仓库里的 [Qwen Image 模板](../workflows/media/comfyui-qwen-image-turbo-t2i/)（中文提示词更友好）、
+[FLUX.3 Klein 文生图](../workflows/media/comfyui-flux3-klein-t2i/)（新一代旗舰，布局引导）或
+[Wan2.1](../workflows/media/comfyui-wan-text-to-video/) / [Wan2.2](../workflows/media/comfyui-wan22-t2v/) 文生视频（8GB 显存可跑起步），模型清单在各自 README。
 
 ---
 
@@ -137,8 +143,9 @@ docker compose up -d
    **上下文**处添加刚建的知识库
 3. 右上角发布 → 得到网页链接，可分享给同事
 
-进阶：去 [Dify Marketplace](https://marketplace.dify.ai/templates) 挑官方模板
-（如多步 RAG 答疑），一键导入即可研究别人的编排。
+进阶：导入本仓库已收录的 [Dify 智能出卷](../workflows/education/dify-question-generator/)
+（9 节点完整 DSL，含两段 LLM 出题+审校），或去
+[Dify Marketplace](https://marketplace.dify.ai/templates) 挑官方模板一键导入研究。
 
 ---
 

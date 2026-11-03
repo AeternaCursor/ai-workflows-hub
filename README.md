@@ -16,7 +16,7 @@
 
 - 🏭 **按行业找**：金融、营销、电商、法务、HR、教育、内容创作、客服、软件研发、通用办公、**制造、医疗、物流**
 - 🧰 **按平台找**：n8n / Dify / Coze Studio / Langflow / Flowise / ComfyUI / GitHub Agentic Workflows
-- 📦 **拿来即用**：已收录 **15 个可导入工作流，覆盖 13 个行业**（n8n ×12 + ComfyUI ×3），四件套配置（JSON + README + TUTORIAL + CASES 双案例），可搜索目录：[Catalog](https://aeternacursor.github.io/ai-workflows-hub/catalog.html)
+- 📦 **拿来即用**：已收录 **18 个可导入工作流，覆盖 13 个行业**（n8n ×12 + ComfyUI ×5 + Dify ×1），四件套配置（JSON + README + TUTORIAL + CASES 双案例），可搜索目录：[Catalog](https://aeternacursor.github.io/ai-workflows-hub/catalog.html)
 - 🕰️ **AI 发展史**：[动画时间线](https://aeternacursor.github.io/ai-workflows-hub/)，从 1943 年人工神经元到 Agent 时代
 - 🔄 **持续维护**：每周定时捕捉新动态，[AI 提示词驱动更新](prompts/update-hub.md)
 
@@ -36,7 +36,7 @@
 ```mermaid
 flowchart LR
     A[零基础] -->|docs/quickstart.md| B[装好平台<br/>跑通第一个]
-    B -->|TUTORIAL.md| C[逐节点吃透<br/>12 个工作流]
+    B -->|TUTORIAL.md| C[逐节点吃透<br/>18 个工作流]
     C -->|CASES.md| D[看真实案例<br/>抄代码]
     D -->|customize-workflow.md| E[AI 改造成<br/>自己的业务]
     E -->|CONTRIBUTING.md| F[贡献回来<br/>案例 3 起追加]

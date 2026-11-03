@@ -7,7 +7,7 @@
 | 你想做什么 | 去哪里 |
 |---|---|
 | 零基础第一次跑通一个 AI 工作流 | [docs/quickstart.md](docs/quickstart.md)（n8n/ComfyUI/Dify 手把手，含安装与 Key 申请） |
-| 逐个工作流的详细实操（逐节点/提示词/排错） | 各工作流目录内的 `TUTORIAL.md`（15 个全覆盖） |
+| 逐个工作流的详细实操（逐节点/提示词/排错） | 各工作流目录内的 `TUTORIAL.md`（18 个全覆盖） |
 | 实操案例与代码示例（输入→输出演示、可抄代码） | 各工作流目录内的 `CASES.md` |
 | 用 AI 把工作流改造成自己的业务版 | [prompts/customize-workflow.md](prompts/customize-workflow.md) |
 | 找可直接导入的 AI 工作流模板 | [resources/template-collections.md](resources/template-collections.md) → 按平台挑 → 导入 |

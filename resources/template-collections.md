@@ -5,6 +5,8 @@
 ## n8n 生态（数量最大）
 
 - [n8n 官方模板库](https://n8n.io/workflows) — 数千个官方 + 社区模板，按类别/集成筛选，编辑器内可直接浏览
+- [zengfr/n8n-workflow-all-templates](https://github.com/zengfr/n8n-workflow-all-templates) — 12,333+ 全量镜像合集（每月同步），按集成分目录，官网模板的离线全集检索入口
+- [n8n 官方 Self-hosted AI Starter Kit](https://github.com/n8n-io/self-hosted-ai-starter-kit) — docker compose 一步起 n8n + Ollama + 本地模型全家桶（15k+ star）
 - [GitHub 上的 n8n 模板合集搜索](https://github.com/search?q=awesome-n8n-templates&type=repositories&s=stars&o=desc) — 按星排序浏览：
   - **awesome-n8n-templates** — 280+ 免费模板（Gmail / Telegram / Slack / Discord / WhatsApp / Notion / OpenAI）
   - **8,697+ 大合集** — 最大开源集合：25 个类别、236 个集成、含向量库 / embedding / LLM 流水线
@@ -21,6 +23,7 @@
 ## Dify 生态（LLM 应用）
 
 - [Dify Marketplace](https://marketplace.dify.ai/templates) — 官方模板市场：SEO Agent、采购 Copilot、多步 RAG 管线（问题抽取 → 循环检索 → 引用生成）
+- [aircrushin/awesome-dify-workflow](https://github.com/aircrushin/awesome-dify-workflow) — 社区精选 DSL 合集（60+：RAG、深度研究、翻译、SEO、出卷等），YAML 直接导入
 - 支持一键采用（one-click adopt），也可导出 DSL YAML 收录进本仓库
 
 ## Coze 生态
