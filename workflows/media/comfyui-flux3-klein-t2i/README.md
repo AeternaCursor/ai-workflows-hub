@@ -1,7 +1,7 @@
 # FLUX.3 Klein 文生图（int8 量化版）
 
 > 来源：[ComfyUI 官方模板 image_flux3_klein_t2i](https://github.com/comfy-org/workflow_templates/blob/main/templates/image_flux3_klein_t2i.json) · MIT
-> 🧪 实测状态：workflow 文件为官方原版（导入即用）；教程为文档级（参数依据官方文档编写，未逐机真机验证）
+> 🧪 实测状态：官方原版 workflow（导入即用）；**2026-11-03 本机真机跑通**（RTX 5060 Ti 16GB · ComfyUI 0.43.0 · torch 2.14.1+cu130：冷启动出图 60s / 热出图 36s / 峰值显存 15.6GB，记录见 TUTORIAL「真机实测记录」）
 
 > 📖 手把手实操：[TUTORIAL.md](TUTORIAL.md)
 > 🧪 实操案例与代码：[CASES.md](CASES.md)
@@ -23,6 +23,12 @@
 1. 拖入 `workflow.json`
 2. 按 TUTORIAL 下载四个模型文件放入对应目录
 3. 写提示词 → Queue；要控布局时用 CreateBoundingBoxes 框区域
+
+## 真机实测产出（默认提示词，seed 152739822040260）
+
+![实测出图](assets/real-test-output.jpg)
+
+> 生成条件：官方模板默认提示词（运动员额头抵足球特写），int8 量化底模，分辨率 1024×1024。
 
 ## 注意
 

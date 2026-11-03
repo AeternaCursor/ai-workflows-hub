@@ -1,5 +1,28 @@
 # 实操教程：FLUX.3 Klein 文生图
 
+## 真机实测记录（2026-11-03）
+
+| 项目 | 实测值 |
+|---|---|
+| 硬件 / 系统 | RTX 5060 Ti **16GB** · RAM 24GB · Windows |
+| 软件 | ComfyUI 0.43.0 便携版 · torch 2.14.1+cu130 |
+| 模型 | int8 量化四件套共 **16.5GB**（底模 5.41 + 扩写器 6.26 + 编码器 4.52 + VAE 0.31） |
+| 冷启动出图 | **60 秒**（含全部模型从磁盘加载，59.1s 为纯执行） |
+| 热出图（换 seed） | **36 秒**（含 Qwen3.5 提示扩写全程） |
+| 峰值显存 | **15.6GB / 15.9GB**（async weight offloading 生效，打满未 OOM） |
+| 出图 | 1024×1024 PNG（约 1.9MB） |
+
+**实测踩坑（真实遇到，照做能省事）**：
+
+1. **官方权重是 HuggingFace 受限仓库（Gated）**——匿名下载报 403 `GatedRepo`。
+   解法：用 BFL 官方合作组织镜像
+   [`ml-resources/flux-3-image-klein-comfy`](https://huggingface.co/ml-resources/flux-3-image-klein-comfy)（文件名、体积与官方完全一致），国内再把域名换成 `hf-mirror.com`。
+2. **hf-mirror 下大文件会中途断**（curl 退出码 56）：用 `curl -C -` 断点续传循环补齐，直到字节数与仓库清单精确一致（16GB 级文件实测断 2 次）。
+3. **同 seed 同提示词二次 Queue 不出新文件**：新版 ComfyUI 资源系统识别相同结果复用同一文件名——想出新图先换 seed。
+4. 16GB 显存跑 int8 版**够用但接近上限**（峰值 15.6GB）：别同时开其他占显存程序；爆了就关掉浏览器再试。
+
+---
+
 > 全程约 30-60 分钟（大头是下载约 20GB 模型）。int8 量化版显存友好，
 > 16GB 级显卡即可起步；24GB+ 建议换 bf16 权重。
 > 前置：ComfyUI 已装好并**更新到较新版本**（见 [Quickstart 路线二](../../../docs/quickstart.md)）——
@@ -62,7 +85,10 @@ FLUX.3 系提示词写**自然语言整句**效果最好（Qwen3.5 增强器对�
 
 | 报错 | 解法 |
 |---|---|
-| 未知节点 / Unknown node | ComfyUI 太旧：菜单 → 更新 ComfyUI 后重启 |
+| 模型下载 403 GatedRepo | 官方库受限：改用 [ml-resources 镜像](https://huggingface.co/ml-resources/flux-3-image-klein-comfy)，国内换 `hf-mirror.com` 域名 |
+| 下载中途断（curl 退出码 56） | `curl -C - -o 文件 URL` 断点续传，循环到字节数与清单一致 |
+| 未知节点 / Unknown node | ComfyUI 太旧：菜单 → 更新 ComfyUI 后重启（0.43.0 实测可用） |
 | 模型加载失败 | 文件名与上表不一致；放错目录；按 R 刷新 |
-| 显存 OOM | 确认用的是 int8 版底模；分辨率降一档 |
+| 显存 OOM | 确认用的是 int8 版底模；关闭其他占显存程序；分辨率降一档 |
+| 二次 Queue 没新文件 | 同 seed 同结果被资源系统复用文件名——换 seed 再跑 |
 | 布局框不生效 | 布局描述要与框一一对应；主提示词里也提到该元素 |

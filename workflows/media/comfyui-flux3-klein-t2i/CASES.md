@@ -1,5 +1,8 @@
 # 实操案例与代码示例：FLUX.3 Klein 文生图
 
+> 说明：案例 1/2 为演示性构造（输入输出格式真实合理）；「代码示例」三节与
+> 文件顶部 README 的实测数据均来自 2026-11-03 真机运行（RTX 5060 Ti 16GB）。
+
 ## 案例 1：同一句需求，普通出图 vs 布局引导出图
 
 **需求**：电商海报，护肤瓶居中、logo 左上、底部一行小字。
@@ -12,25 +15,37 @@
 **结论**：元素多、位置有要求的海报类需求，布局框从"抽卡"变"摆盘"——
 这是 FLUX.3 相对上代最实用的增量能力。
 
-## 代码示例
+## 代码示例（以下方法均经真机实测，RTX 5060 Ti 16GB）
 
-### 1. 批量出图换 seed（python，API 模式）
+### 1. 官方只给了 UI 格式？从 /history 导出 API 格式（实测可用）
 
-```python
-import json, urllib.request, random
+官方模板是 UI 格式（含子图），`/prompt` 接口只认 API 格式。实测解法：
+**界面里先跑成功一次**，然后从历史接口把服务器端展开好的 API workflow 拿回来：
 
-WF = json.load(open("flux3_api.json", encoding="utf-8"))  # 导出 API 格式后用
-for i in range(4):
-    WF["KSampler_node_id"]["inputs"]["seed"] = random.randint(0, 2**32)
-    # 节点 ID 在导出的 json 顶层 key 里找，逐个对照改
-    urllib.request.urlopen(urllib.request.Request(
-        "http://127.0.0.1:8188/prompt",
-        data=json.dumps({"prompt": WF}).encode(),
-        headers={"Content-Type": "application/json"}))
-# 4 张在 ComfyUI/output/，挑最好的 seed 固定下来再精修
+```powershell
+# 1) 列出执行历史，取一条 success 的 prompt_id
+curl http://127.0.0.1:8188/history?max_items=5
+# 2) 取该次执行的第 [2] 个元素（prompt[2] 即展开后的 API workflow，子图节点形如 "18:7"）
+curl http://127.0.0.1:8188/history/<prompt_id> -o hist.json
 ```
 
-### 2. 出图后统一压缩发审（PowerShell + magick）
+### 2. 换 seed 批量出图（node，实测 36s/张）
+
+```javascript
+const fs = require('fs'), http = require('http');
+const wf = JSON.parse(fs.readFileSync('flux3_api.json', 'utf8')); // 上一步导出的
+wf['18:7'].inputs.seed = Math.floor(Math.random() * 2 ** 48);     // 18:7 = 子图内 KSampler
+const body = JSON.stringify({ prompt: wf, client_id: 'runner' });
+const req = http.request({ hostname: '127.0.0.1', port: 8188, path: '/prompt',
+  method: 'POST', headers: { 'Content-Type': 'application/json' } }, res => {
+  let d = ''; res.on('data', c => d += c);
+  res.on('end', () => console.log('queued', JSON.parse(d).prompt_id));
+});
+req.write(body); req.end();
+// 注意：同 seed 同提示词不会生成新文件（资源系统复用文件名），批量务必换 seed
+```
+
+### 3. 出图后统一压缩发审（PowerShell + magick）
 
 ```powershell
 magick mogrify -path .\review -resize 1600x -quality 88 *.png
